@@ -1,0 +1,48 @@
+.textarea {
+  height: 14rem;
+}
+
+input[type="file"],
+input[type="file"]::before {
+  content: "Browse";
+  background: linear-gradient(to right, #4dd4f7, #9090fb, #ff6b81, #fbdf63);
+  width: 12.5rem;
+  font-weight: 800;
+  height: 40px;
+  display: block;
+  text-align: left;
+  position: relative;
+  margin: 0 5px;
+  left: -6px;
+  border: none;
+  top: -1px;
+  line-height: 30px;
+  color: #ffffff;
+  padding-left: 5px;
+  display: block;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type="file"]:checked {
+  border: none;
+  box-shadow: none;
+}
+
+input[type="file"]::before {
+  content: "Upload Photos or Video";
+  width: 12.5rem;
+}
+
+::-webkit-file-upload-button {
+  display: none;
+}
+
+.createpost-btn-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.menu-history-status h1 {
+  margin: 2rem 0 1.5rem 0;
+}

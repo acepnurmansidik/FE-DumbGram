@@ -7,6 +7,7 @@ import "./style/root.css";
 import "./style/sidebar-profile.css";
 import "./style/navigation.css";
 import "./style/landing-page.css";
+import "./style/create-post.css";
 // import "./style/feed.css";
 
 ReactDOM.render(
