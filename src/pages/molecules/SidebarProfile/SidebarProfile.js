@@ -7,18 +7,20 @@ export default function SidebarProfile() {
     <>
       <Col sm={4} className="sidebar-profile-container">
         <div className="sidebar-profile-container">
-          <div className="sidebar-logo position-relative mb-5">
-            <div className="position-absolute top-0 start-0 mt-3">
-              <img
-                className="img1-logo-dumbgram"
-                src="../assets/icons/DumbGram.svg"
-                alt=""
-              />
+          <Link to="/explore">
+            <div className="sidebar-logo position-relative mb-5">
+              <div className="position-absolute top-0 start-0 mt-3">
+                <img
+                  className="img1-logo-dumbgram"
+                  src="../assets/icons/DumbGram.svg"
+                  alt=""
+                />
+              </div>
+              <div className="position-absolute top-0 start-0">
+                <img src="../assets/icons/shadow.svg" alt="" />
+              </div>
             </div>
-            <div className="position-absolute top-0 start-0">
-              <img src="../assets/icons/shadow.svg" alt="" />
-            </div>
-          </div>
+          </Link>
           <div className="sidebar-menu-home">
             <div className="sidebar-edit-nav">
               <a href="/edit-profile">

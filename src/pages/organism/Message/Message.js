@@ -1,5 +1,6 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Navigation from "../../molecules/Navigation/Navigation";
 import CardMessagePeoples from "./CardMessagePeoples";
 
@@ -11,18 +12,20 @@ export default function Message() {
           <Row>
             <Col sm={4} className="sidebar-profile-container">
               <div className="sidebar-profile-container">
-                <div className="sidebar-logo position-relative mb-5">
-                  <div className="position-absolute top-0 start-0 mt-3">
-                    <img
-                      className="img1-logo-dumbgram"
-                      src="../assets/icons/DumbGram.svg"
-                      alt=""
-                    />
+                <Link to="/explore">
+                  <div className="sidebar-logo position-relative mb-5">
+                    <div className="position-absolute top-0 start-0 mt-3">
+                      <img
+                        className="img1-logo-dumbgram"
+                        src="../assets/icons/DumbGram.svg"
+                        alt=""
+                      />
+                    </div>
+                    <div className="position-absolute top-0 start-0">
+                      <img src="../assets/icons/shadow.svg" alt="" />
+                    </div>
                   </div>
-                  <div className="position-absolute top-0 start-0">
-                    <img src="../assets/icons/shadow.svg" alt="" />
-                  </div>
-                </div>
+                </Link>
                 <div className="sidebar-message-menu">
                   <CardMessagePeoples
                     titleName={`Venelope`}
