@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import Navigation from "../../molecules/Navigation/Navigation";
-import SidebarProfile from "../../molecules/SidebarProfile/SidebarProfile";
+import SidebarEditProfile from "./SidebarEditProfile";
 
 export default function EditProfile() {
   return (
@@ -9,7 +9,7 @@ export default function EditProfile() {
       <Container fluid>
         <div className="general-container">
           <Row>
-            <SidebarProfile />
+            <SidebarEditProfile />
             <Col sm={8} className="nav-menu-content">
               <Row>
                 <Navigation />
