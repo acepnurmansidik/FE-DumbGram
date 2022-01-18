@@ -1,0 +1,6 @@
+.unfollow-btn,
+.unfollow-btn:hover {
+  background: rgba(180, 180, 180, 0.2);
+  box-shadow: none;
+  border: none;
+}

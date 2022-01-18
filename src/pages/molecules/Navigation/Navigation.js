@@ -17,7 +17,7 @@ export default function Navigation() {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item href="/people" className="dd-card">
+                <Dropdown.Item href="/profile-people" className="dd-card">
                   <div className="dd-card-img">
                     <img src="/assets/img/Rectangle 10.png" alt="" />
                   </div>
