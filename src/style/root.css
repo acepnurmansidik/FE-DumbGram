@@ -49,6 +49,8 @@
 .gradient-btn {
   background: linear-gradient(to right, #4dd4f7, #9090fb, #ff6b81, #fbdf63);
   font-weight: 800;
+  text-decoration: none;
+  color: #fff;
 }
 
 .gradient-btn:hover {

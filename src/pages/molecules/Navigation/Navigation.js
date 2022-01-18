@@ -17,7 +17,7 @@ export default function Navigation() {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item href="/people" classNameName="dd-card">
+                <Dropdown.Item href="/people" className="dd-card">
                   <div className="dd-card-img">
                     <img src="/assets/img/Rectangle 10.png" alt="" />
                   </div>
@@ -37,7 +37,7 @@ export default function Navigation() {
             </Link>
           </div>
           <div className="btn-group">
-            <Link to="/create-post" className="btn create-post">
+            <Link to="/create-post" className="btn gradient-btn">
               Create Post
             </Link>
           </div>

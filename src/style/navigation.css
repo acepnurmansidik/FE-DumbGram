@@ -34,19 +34,21 @@
 /* Button */
 /* modal btn---- */
 /* MIX*************** */
-/* .btn-primary,
-.btn-primary:hover,
-.primary.dropdown-toggle,
+.show > .btn-primary.dropdown-toggle,
 .show > .btn-primary.dropdown-toggle:focus {
   border: none;
   background-color: transparent;
   box-shadow: none;
-} */
+}
 
+.btn-group .btn-primary,
 .btn-message,
 .btn-notif {
   width: 3rem;
-  background-color: brown;
+}
+
+.btn-group:nth-child(3) {
+  width: 8rem;
 }
 /* Dropdown--------------- */
 .dropdown-toggle {
@@ -56,9 +58,16 @@
 .dropdown-toggle::after {
   content: none;
 }
+
+.dropdown-menu {
+  background-color: rgb(31, 31, 31);
+  color: #fff;
+  margin-top: 0.5rem;
+  border-radius: 5px;
+}
+
 .dd-card {
   display: flex;
-  flex-direction: row;
   font-size: 0.8rem;
   align-items: center;
   padding: 0;
@@ -72,7 +81,7 @@
   border-radius: 50%;
 }
 
-.dd-card img {
+.dd-card-img img {
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
