@@ -1,0 +1,86 @@
+.nav-menu-content {
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  gap: 2rem;
+}
+
+.menu-btn-nav,
+.menu-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+/* Search */
+.menu-nav-search {
+  flex: 3;
+}
+.menu-nav-search input {
+  width: 80%;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem;
+  background: rgba(180, 180, 180, 0.2);
+  color: #fff;
+}
+
+.menu-nav-search input:focus {
+  outline: none;
+}
+
+/* Button */
+/* MIX*************** */
+.btn-message,
+.btn-notif,
+.btn-primary,
+.btn-primary:hover,
+.primary.dropdown-toggle,
+.show > .btn-primary.dropdown-toggle:focus {
+  border: none;
+  background-color: transparent;
+  width: 3rem;
+  box-shadow: none;
+}
+/* Dropdown--------------- */
+.dropdown-toggle {
+  white-space: normal;
+}
+
+.dropdown-toggle::after {
+  content: none;
+}
+.dd-card {
+  display: flex;
+  flex-direction: row;
+  font-size: 0.8rem;
+  align-items: center;
+  padding: 0;
+  gap: 7px;
+}
+
+.dd-card-img {
+  margin-left: 12px;
+  padding: 0.1rem;
+  background: linear-gradient(to right, #4dd4f7, #9090fb, #ff6b81, #fbdf63);
+  border-radius: 50%;
+}
+
+.dd-card img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  margin-right: 1px;
+  margin-top: 0.35px;
+}
+/* create-post */
+.create-post {
+  background: linear-gradient(to right, #4dd4f7, #9090fb, #ff6b81, #fbdf63);
+  font-weight: 800;
+}
+
+.create-post:hover {
+  color: #fff;
+}

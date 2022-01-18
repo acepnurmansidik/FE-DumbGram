@@ -1,0 +1,43 @@
+#root {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  font-family: 1rem "Montserrat", sans-serif;
+  background: #0b0b0b;
+  color: #fff;
+  font-weight: 400;
+}
+
+.general-container {
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+/* btn setting */
+.btn {
+  width: 135px;
+  height: 40px;
+  margin-right: 1rem;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-weight: 800;
+  color: #fff;
+}
+
+.btn:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.btn-primary:focus {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.btn-link-basic,
+.btn-link-basic:hover {
+  text-decoration: none;
+  color: #fff;
+}
