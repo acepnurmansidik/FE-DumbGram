@@ -10,7 +10,6 @@ import "./style/landing-page.css";
 import "./style/create-post.css";
 import "./style/edit-profile.css";
 import "./style/sidebar-profile-people.css";
-// import "./style/feed.css";
 
 ReactDOM.render(
   <React.StrictMode>
