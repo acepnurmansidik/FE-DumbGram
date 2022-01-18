@@ -1,0 +1,26 @@
+.edit-upload input[type="file"],
+.edit-upload input[type="file"]::before {
+  content: "Upload photos";
+  background: linear-gradient(to right, #4dd4f7, #9090fb, #ff6b81, #fbdf63);
+  width: 8.2rem;
+  font-weight: 800;
+  height: 40px;
+  display: block;
+  text-align: left;
+  position: relative;
+  margin: 0 5px;
+  left: -6px;
+  border: none;
+  top: -1px;
+  line-height: 30px;
+  color: #ffffff;
+  padding-left: 5px;
+  display: block;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-upload input[type="file"]:checked {
+  border: none;
+  box-shadow: none;
+}
