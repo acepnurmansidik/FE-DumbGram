@@ -1,0 +1,31 @@
+.sidebar-message-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow: scroll;
+  height: 100%;
+}
+
+.card-message-peoples {
+  display: flex;
+  align-items: center;
+  height: 3.5rem;
+  gap: 0.8rem;
+  cursor: pointer;
+}
+.card-message-peoples:hover {
+  background: rgba(180, 180, 180, 0.1);
+}
+
+.card-message-peoples .card-message-peoples {
+  flex: 1;
+}
+
+.card-message-peoples .card-info-people {
+  flex: 2;
+}
+
+.card-message-peoples .dd-card-img img {
+  width: 3rem;
+  height: 3rem;
+}
