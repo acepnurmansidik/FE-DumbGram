@@ -4,23 +4,9 @@
   box-sizing: border-box;
 }
 /* MIX */
-
-.btn-register,
-.btn-register:hover,
 .modal-content {
   background: #0b0b0b;
   color: #b7b7b7;
-}
-
-/* button */
-.btn-login,
-.btn-submit {
-  background: linear-gradient(to right, #4dd4f7, #9090fb, #ff6b81, #fbdf63);
-  border: none;
-}
-
-.btn-submit {
-  width: 100%;
 }
 
 /* layout */
@@ -51,13 +37,9 @@ p {
 .form-text {
   text-align: center;
 }
-.input-field,
-.input-field:focus {
-  background-color: rgba(210, 210, 210, 0.5);
-  color: #fff;
-  outline: none;
-  border: 1px solid #fff;
-  box-shadow: none;
+
+.btn-submit {
+  width: 100%;
 }
 
 /* Images */

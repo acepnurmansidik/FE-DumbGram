@@ -42,7 +42,7 @@ export default function LandingPage() {
                 <div className="lp-btn-modal">
                   {/* BTN & MODAL LOGIN */}
                   <Button
-                    className="btn-login"
+                    className="gradient-btn"
                     onClick={() => setModalLogin(true)}
                   >
                     Login
@@ -54,10 +54,7 @@ export default function LandingPage() {
 
                   {/* BTN & MODAL REGISTER */}
 
-                  <Button
-                    className="btn-register"
-                    onClick={() => setModalRegister(true)}
-                  >
+                  <Button onClick={() => setModalRegister(true)}>
                     Register
                   </Button>
 

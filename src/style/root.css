@@ -15,9 +15,8 @@
 
 /* btn setting */
 .btn {
-  width: 135px;
+  width: 6.5rem;
   height: 40px;
-  margin-right: 1rem;
   border-radius: 5px;
   border: none;
   outline: none;
@@ -36,8 +35,40 @@
   box-shadow: none;
 }
 
+.btn-primary,
+.btn-primary:focus,
+.btn-primary:hover,
 .btn-link-basic,
 .btn-link-basic:hover {
-  text-decoration: none;
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+  color: #fff;
+}
+
+.gradient-btn {
+  background: linear-gradient(to right, #4dd4f7, #9090fb, #ff6b81, #fbdf63);
+  font-weight: 800;
+}
+
+.gradient-btn:hover {
+  color: #fff;
+}
+
+/* Form input */
+.form-control {
+  background-color: rgba(180, 180, 180, 0.2);
+  border: 2px solid rgb(161, 161, 161);
+  outline: none;
+  color: #fff;
+  height: 50px;
+  justify-content: center;
+  margin-top: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+.form-control:focus {
+  background: rgba(180, 180, 180, 0.2);
+  box-shadow: none;
+  outline: none;
   color: #fff;
 }

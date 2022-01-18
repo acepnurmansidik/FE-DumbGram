@@ -18,7 +18,7 @@ export default function ModalLoginShow(props) {
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Control
                 type="email"
-                className="input-field"
+                className="form-control"
                 placeholder="Email"
                 name="email"
               />
@@ -27,12 +27,12 @@ export default function ModalLoginShow(props) {
             <Form.Group className="mb-4" controlId="formBasicPassword">
               <Form.Control
                 type="password"
-                className="input-field"
+                className="form-control"
                 placeholder="Password"
                 name="password"
               />
             </Form.Group>
-            <Button className="btn-submit" type="submit">
+            <Button className="gradient-btn btn-submit" type="submit">
               Submit
             </Button>
             <Form.Group className="mb-2 mt-3" controlId="formBasicPassword">

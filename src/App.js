@@ -9,7 +9,7 @@ export default function App() {
     <Router>
       <Routes>
         <Route exact path="/" element={<LandingPage />} />
-        <Route exact path="/feed" element={<Feed />} />
+        {/* <Route exact path="/feed" element={<Feed />} /> */}
       </Routes>
     </Router>
   );
