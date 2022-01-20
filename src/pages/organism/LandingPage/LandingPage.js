@@ -31,6 +31,9 @@ export default function LandingPage() {
       imageUrl: "Rectangle 10.png",
     },
     {
+      imageUrl: "Rectangle 1000.png",
+    },
+    {
       imageUrl: "Rectangle 12.png",
     },
   ];
@@ -99,7 +102,7 @@ export default function LandingPage() {
               </Row>
             </Col>
             <Col sm={7}>
-              <div>
+              <div className="lp-mansory-images">
                 <Masonry
                   breakpointCols={breakpointColumnsObj}
                   className="my-masonry-grid"
@@ -107,7 +110,7 @@ export default function LandingPage() {
                 >
                   {photosList.map((item) => (
                     <div className="lp-img-item">
-                      <img src={`../assets/img/${item.imageUrl}`} />
+                      <img src={`../assets/img/${item.imageUrl}`} alt="" />
                     </div>
                   ))}
                 </Masonry>

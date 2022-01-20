@@ -65,3 +65,9 @@ p {
   width: 50%;
   background-color: whitesmoke;
 }
+
+.lp-mansory-images {
+  padding: 0.2rem 8rem;
+  box-sizing: border-box;
+  height: 80vh;
+}
