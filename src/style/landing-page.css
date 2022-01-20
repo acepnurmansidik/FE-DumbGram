@@ -41,3 +41,50 @@ p {
 .btn-submit {
   width: 100%;
 }
+
+.photo-list {
+  width: 100%;
+  list-style: none;
+  margin: 20px auto;
+}
+
+.photo-item {
+  display: flex;
+  width: 30px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+  margin: 20px 0;
+}
+
+.photo-item img {
+  display: flex;
+  width: 100%;
+  border: 4px double rgba(0, 0, 0, 0.12);
+}
+
+.my-masonry-grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  margin: auto; /* gutter size offset */
+  width: auto;
+  box-sizing: border-box;
+  background-color: yellowgreen;
+}
+.my-masonry-grid_column {
+  padding-left: 30px; /* gutter size */
+  background-clip: padding-box;
+  /* background-color: violet; */
+}
+
+/* Style your items */
+.my-masonry-grid_column > div {
+  /* change div to reference your elements you put in <Masonry> */
+  background: grey;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.lp-img-item img {
+  width: 50%;
+  background-color: whitesmoke;
+}

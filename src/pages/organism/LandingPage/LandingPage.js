@@ -8,6 +8,39 @@ export default function LandingPage() {
   const [modalLogin, setModalLogin] = useState(false);
   const [modalRegsiter, setModalRegister] = useState(false);
 
+  let photosList = [
+    {
+      imageUrl: "Rectangle 6.png",
+    },
+    {
+      imageUrl: "Rectangle 3.png",
+    },
+    {
+      imageUrl: "Rectangle 4.png",
+    },
+    {
+      imageUrl: "Rectangle 5.png",
+    },
+    {
+      imageUrl: "Rectangle 9.png",
+    },
+    {
+      imageUrl: "Rectangle 8.png",
+    },
+    {
+      imageUrl: "Rectangle 10.png",
+    },
+    {
+      imageUrl: "Rectangle 12.png",
+    },
+  ];
+
+  const breakpointColumnsObj = {
+    default: 3,
+    1100: 3,
+    700: 2,
+    500: 1,
+  };
   return (
     <>
       <Container fluid>
@@ -66,40 +99,19 @@ export default function LandingPage() {
               </Row>
             </Col>
             <Col sm={7}>
-              <h2>2 of 2</h2>
-              <Masonry
-                breakpointCols={3}
-                className="my-masonry-grid"
-                columnClassName="my-masonry-grid_column"
-              >
-                {/* array of JSX items */}
-              </Masonry>
-              {/* <div className="col lp-images">
-                <div>
-                  <img src="../assets/img/Rectangle 6.png" alt="" />
-                </div>
-                <div>
-                  <img src="../assets/img/Rectangle 3.png" alt="" />
-                </div>
-                <div>
-                  <img src="../assets/img/Rectangle 4.png" alt="" />
-                </div>
-                <div>
-                  <img src="../assets/img/Rectangle 8.png" alt="" />
-                </div>
-                <div>
-                  <img src="../assets/img/Rectangle 5.png" alt="" />
-                </div>
-                <div>
-                  <img src="../assets/img/Rectangle 9.png" alt="" />
-                </div>
-                <div>
-                  <img src="../assets/img/Rectangle 10.png" alt="" />
-                </div>
-                <div>
-                  <img src="../assets/img/Rectangle 12.png" alt="" />
-                </div>
-              </div> */}
+              <div>
+                <Masonry
+                  breakpointCols={3}
+                  className="my-masonry-grid"
+                  columnClassName="my-masonry-grid_column"
+                >
+                  {photosList.map((item) => (
+                    <div className="lp-img-item">
+                      <img src={`../assets/img/${item.imageUrl}`} />
+                    </div>
+                  ))}
+                </Masonry>
+              </div>
             </Col>
           </Row>
         </div>
