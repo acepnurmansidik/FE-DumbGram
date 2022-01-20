@@ -1,0 +1,161 @@
+.statusRell-img-item {
+  color: #fff;
+}
+
+.my-masonry-grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  width: auto;
+  gap: 1rem;
+}
+.my-masonry-grid_column {
+  /* padding-left: 2rem; gutter size */
+  background-clip: padding-box;
+}
+
+/* Style your items */
+.my-masonry-grid_column > div {
+  /* change div to reference your elements you put in <Masonry> */
+  margin-bottom: 1rem;
+}
+
+.my-masonry-grid_column img {
+  width: 100%;
+}
+
+.statusRell-style {
+  overflow: scroll;
+  height: 80vh;
+}
+
+.card {
+  background-color: transparent;
+  font-size: 1rem;
+  color: #fff;
+  border: none;
+}
+
+/*  */
+
+.statusRell-nav-body,
+.statusRell-user-info {
+  display: flex;
+  box-sizing: border-box;
+  gap: 10px;
+}
+
+.statusRell-user-profile {
+  padding: 2px;
+  width: 34px;
+  height: 34px;
+  background: linear-gradient(to right, #4dd4f7, #9090fb, #ff6b81, #fbdf63);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.statusRell-user-profile img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.statusRell-user-info {
+  width: 95%;
+}
+
+.statusRell-btn-modal,
+.statusRell-user-profile {
+  cursor: pointer;
+}
+
+/*  */
+.statusRell-nav-btns img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.statusRell-nav-btn,
+.statusRell-nav-body .statusRell-nav-btn {
+  display: flex;
+  align-items: center;
+  width: 30%;
+  justify-content: space-between;
+  gap: 0.3rem;
+}
+
+.statusRell-nav-btn img {
+  height: 20px;
+  width: 20px;
+}
+
+.statusRell-nav-btn button {
+  border: none;
+}
+
+.statusRell-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* modal */
+.statusRell-modal-container,
+.owner-status-modal,
+.modal-card-people {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/*  */
+.modal-thumbnail-status img {
+  flex: 2;
+  height: 60vh;
+  width: 25vw;
+}
+
+.modal-comments-response {
+  flex: 1;
+  display: flex;
+  overflow: scroll;
+  height: 25rem;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/*  */
+.owner-status-modal img,
+.modal-card-img img {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+}
+
+.modal-card-people {
+  align-items: center;
+}
+
+/* vertical-line */
+.vertical-line {
+  border-left: 1px solid #4d4d4d;
+  height: 100%;
+  width: 0;
+  display: inline-block;
+  padding: 5px;
+  margin: 0 2.5rem;
+}
+
+.statusRell-nav-btnModal .statusRell-nav-body,
+.statusRell-nav-btnModal {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.2rem;
+}
+
+.info-statusRell-modal {
+  display: flex;
+  justify-content: flex-end;
+}
