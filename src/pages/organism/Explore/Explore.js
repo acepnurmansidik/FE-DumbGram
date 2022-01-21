@@ -135,7 +135,7 @@ function MyVerticallyCenteredModal(props) {
                   <img src="/assets/img/Rectangle 8.png" alt="" />
                 </Link>
                 <div className="modal-info-people">
-                  <label for="" className="mt-3">
+                  <label htmlFor="" className="mt-3">
                     Acep
                   </label>
                   <p>Hello lisa, today i'll eat you at your badroom.</p>
@@ -146,7 +146,7 @@ function MyVerticallyCenteredModal(props) {
                   <img src="/assets/img/Rectangle 8.png" alt="" />
                 </Link>
                 <div className="modal-info-people">
-                  <label for="" className="mt-3">
+                  <label htmlFor="" className="mt-3">
                     Acep
                   </label>
                   <p>Hello lisa, today i'll eat you at your badroom.</p>
@@ -157,7 +157,7 @@ function MyVerticallyCenteredModal(props) {
                   <img src="/assets/img/Rectangle 8.png" alt="" />
                 </Link>
                 <div className="modal-info-people">
-                  <label for="" className="mt-3">
+                  <label htmlFor="" className="mt-3">
                     Acep
                   </label>
                   <p>Hello lisa, today i'll eat you at your badroom.</p>
@@ -168,7 +168,7 @@ function MyVerticallyCenteredModal(props) {
                   <img src="/assets/img/Rectangle 8.png" alt="" />
                 </Link>
                 <div className="modal-info-people">
-                  <label for="" className="mt-3">
+                  <label htmlFor="" className="mt-3">
                     Acep
                   </label>
                   <p>Hello lisa, today i'll eat you at your badroom.</p>
@@ -179,7 +179,7 @@ function MyVerticallyCenteredModal(props) {
                   <img src="/assets/img/Rectangle 8.png" alt="" />
                 </Link>
                 <div className="modal-info-people">
-                  <label for="" className="mt-3">
+                  <label htmlFor="" className="mt-3">
                     Acep
                   </label>
                   <p>Hello lisa, today i'll eat you at your badroom.</p>
@@ -190,7 +190,7 @@ function MyVerticallyCenteredModal(props) {
                   <img src="/assets/img/Rectangle 8.png" alt="" />
                 </Link>
                 <div className="modal-info-people">
-                  <label for="" className="mt-3">
+                  <label htmlFor="" className="mt-3">
                     Acep
                   </label>
                   <p>Hello lisa, today i'll eat you at your badroom.</p>

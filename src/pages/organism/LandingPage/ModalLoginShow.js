@@ -1,7 +1,23 @@
 import React from "react";
 import { Button, Form, Modal } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function ModalLoginShow(props) {
+  const router = useNavigate();
+
+  const handelOnSubmit = () => {
+    toast.success("Wohoo, login success", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+    router("/feed");
+  };
   return (
     <>
       <Modal
@@ -32,7 +48,11 @@ export default function ModalLoginShow(props) {
                 name="password"
               />
             </Form.Group>
-            <Button className="gradient-btn btn-submit" type="submit">
+            <Button
+              onClick={handelOnSubmit}
+              className="gradient-btn btn-submit"
+              type="submit"
+            >
               Submit
             </Button>
             <Form.Group className="mb-2 mt-3" controlId="formBasicPassword">
