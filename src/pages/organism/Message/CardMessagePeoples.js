@@ -1,18 +1,22 @@
 import React from "react";
 
-export default function CardMessagePeoples({ dataContact, setContact, contact }) {
+export default function CardMessagePeoples({
+  dataContact,
+  setChatList,
+  chatList,
+}) {
   const clickContact = (id) => {
-    const data = dataContact.find((dateItem) => dateItem.id === id);
-    setContact(data);
+    const data = dataContact.find((dateItem) => dateItem.idReceiver === id);
+    setChatList(data);
   };
   return (
     <>
-      {dataContact.map((dateItem, index) => (
+      {dataContact.map((dateItem) => (
         <div
-          key={index}
-          onClick={() => clickContact(dateItem.id)}
+          key={dateItem.idReceiver}
+          onClick={() => clickContact(dateItem.idReceiver)}
           className={`card-message-peoples ${
-            contact?.idReceiver === dateItem?.idReceiver && "contact-active"
+            chatList?.idReceiver === dateItem?.idReceiver && "contact-active"
           }`}
         >
           <div className="dd-card-img">

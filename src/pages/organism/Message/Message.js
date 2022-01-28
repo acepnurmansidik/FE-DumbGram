@@ -6,7 +6,7 @@ import CardMessagePeoples from "./CardMessagePeoples";
 import Chat from "./Chat";
 
 export default function Message() {
-  const [contact, setContact] = useState(null);
+  const [chatList, setChatList] = useState(null);
 
   const dataContact = [
     {
@@ -112,8 +112,8 @@ export default function Message() {
                 <div className="sidebar-message-menu">
                   <CardMessagePeoples
                     dataContact={dataContact}
-                    setContact={setContact}
-                    contact={contact}
+                    setContact={setChatList}
+                    contact={chatList}
                   />
                 </div>
               </div>
@@ -126,7 +126,7 @@ export default function Message() {
                 <h1>Message</h1>
               </Row>
               <Row>
-                <Chat contact={contact} dataContact={dataContact} />
+                <Chat contact={chatList} dataContact={dataContact} />
               </Row>
             </Col>
           </Row>
