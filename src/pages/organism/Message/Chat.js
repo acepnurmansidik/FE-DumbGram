@@ -1,44 +1,51 @@
-import React from 'react'
+import React from "react";
 
-export default function Chat({ contact,dataContact }) {
-
-    return (
-      <>
-        {contact ? (
-            <MessageResponse contact={contact} dataContact={dataContact} />
-        ) : (
-            <NoMessageResponse />
-        )}
-      </>
-    );
-
-}
-
-function NoMessageResponse(){
+export default function Chat({ contact, dataContact }) {
   return (
     <>
-        <div className="history-message-rell">
-          <div className="no-message-status">
-            <h1>No Message</h1>
-          </div>
-        </div>
+      {contact ? (
+        <MessageResponse contact={contact} dataContact={dataContact} />
+      ) : (
+        <NoMessageResponse />
+      )}
     </>
   );
 }
 
-function MessageResponse({contact, dataContact}) {
-  console.log(dataContact);
+function NoMessageResponse() {
+  return (
+    <>
+      <div className="history-message-rell">
+        <div className="no-message-status">
+          <h1>No Message</h1>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function MessageResponse({ contact, dataContact }) {
   return (
     <div>
       <div className="history-message-rell">
-        <div className="card-me">
-          <img src="/assets/img/Rectangle 10.png" alt="" />
-          <p>Hello lisa, today i'll eat you at your badroom.</p>
-        </div>
-        <div className="card-other">
-          <img src="/assets/img/Rectangle 10.png" alt="" />
-          <p>Hello lisa, today i'll eat you at your badroom.</p>
-        </div>
+        {dataContact.map((msgItem) => {
+          if (msgItem.idSender === 2) {
+            return (
+              <div className="card-other">
+                <p className="time-message-rell">23:13</p>
+                <p>{msgItem.message}</p>
+              </div>
+            );
+          } else if (msgItem.idSender === 4) {
+            return (
+              <div className="card-me">
+                <img src="/assets/img/Rectangle 10.png" alt="" />
+                <p>{msgItem.message}</p>
+                <p className="time-message-rell">23:13</p>
+              </div>
+            );
+          }
+        })}
       </div>
       <div className="sender-message-input">
         <input type="text" placeholder="Send Message" />

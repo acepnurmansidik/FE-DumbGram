@@ -31,7 +31,8 @@
   gap: 0.5rem;
 }
 
-.history-message-rell .card-me {
+.history-message-rell .card-me,
+.history-message-rell .card-other {
   display: flex;
   flex-direction: row;
   gap: 0.7rem;
@@ -39,19 +40,26 @@
 }
 
 .history-message-rell .card-other {
-  display: flex;
-  flex-direction: row;
   justify-content: flex-end;
-  gap: 0.7rem;
-  background-color: #0b0b0b;
 }
 
-.history-message-rell .card-other img {
-  order: 2;
+/* time */
+.card-me .time-message-rell,
+.card-other .time-message-rell{
+  width: 3vw;
+  text-align: center;
+  background-color: #0b0b0b;
 }
 
 .history-message-rell .card-other p {
   order: 1;
+}
+
+.history-message-rell p{
+  background-color: rgba(87, 87, 87, .3);
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px;
 }
 
 .history-message-rell img {
