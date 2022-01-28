@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Navigation from "../../molecules/Navigation/Navigation";
 import CardMessagePeoples from "./CardMessagePeoples";
+import Chat from "./Chat";
 
 export default function Message() {
+  const [contact, setContact] = useState(null);
+
+  const dataContact = [
+    {
+      id: 1,
+      titleName: "Teressa",
+      chat: "Yes, Is there anything I can help",
+      thumbnail: "Rectangle 10.png",
+    },
+    {
+      id: 1,
+      titleName: "Teressa",
+      chat: "homework?",
+      thumbnail: "Rectangle 10.png",
+    },
+    {
+      id: 2,
+      titleName: "Yuki",
+      chat: "Hello World",
+      thumbnail: "Rectangle 10.png",
+    },
+  ];
   return (
     <>
       <Container fluid>
@@ -28,24 +51,9 @@ export default function Message() {
                 </Link>
                 <div className="sidebar-message-menu">
                   <CardMessagePeoples
-                    titleName={`Venelope`}
-                    message={`i love you so much`}
-                    thumbnail={`Rectangle 10.png`}
-                  />
-                  <CardMessagePeoples
-                    titleName={`Lydia`}
-                    message={`hey babe, can you bought underwear for me?`}
-                    thumbnail={`Rectangle 8.png`}
-                  />
-                  <CardMessagePeoples
-                    titleName={`Claudia`}
-                    message={`please, come my home now`}
-                    thumbnail={`Rectangle 3.png`}
-                  />
-                  <CardMessagePeoples
-                    titleName={`Miya`}
-                    message={`please hug me`}
-                    thumbnail={`Rectangle 12.png`}
+                    dataContact={dataContact}
+                    setContact={setContact}
+                    contact={contact}
                   />
                 </div>
               </div>
@@ -56,6 +64,9 @@ export default function Message() {
               </Row>
               <Row>
                 <h1>Message</h1>
+              </Row>
+              <Row>
+                <Chat contact={contact} dataContact={dataContact} />
               </Row>
             </Col>
           </Row>

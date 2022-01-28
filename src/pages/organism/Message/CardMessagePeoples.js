@@ -1,20 +1,31 @@
 import React from "react";
 
-export default function CardMessagePeoples(props) {
-  const { titleName, message, thumbnail } = props;
+export default function CardMessagePeoples({ dataContact, setContact, contact }) {
+  const clickContact = (id) => {
+    const data = dataContact.find((dateItem) => dateItem.id === id);
+    setContact(data);
+  };
   return (
     <>
-      <div className="card-message-peoples">
-        <div className="dd-card-img">
-          <img src={`/assets/img/${thumbnail}`} alt="" />
+      {dataContact.map((dateItem, index) => (
+        <div
+          key={index}
+          onClick={() => clickContact(dateItem.id)}
+          className={`card-message-peoples ${
+            contact?.id === dateItem?.id && "contact-active"
+          }`}
+        >
+          <div className="dd-card-img">
+            <img src={`/assets/img/${dateItem.thumbnail}`} alt="" />
+          </div>
+          <div className="card-info-people">
+            <div className="mt-3">
+              {dateItem.titleName}
+            </div>
+            <p>{dateItem.chat}</p>
+          </div>
         </div>
-        <div className="card-info-people">
-          <label for="" className="mt-3">
-            {titleName}
-          </label>
-          <p>{message}</p>
-        </div>
-      </div>
+      ))}
     </>
   );
 }

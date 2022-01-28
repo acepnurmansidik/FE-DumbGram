@@ -6,6 +6,7 @@ import App from "./App";
 import "./style/root.css";
 import "./style/sidebar-profile.css";
 import "./style/navigation.css";
+import "./style/message-chat.css";
 import "./style/landing-page.css";
 import "./style/create-post.css";
 import "./style/status-rell.css";
