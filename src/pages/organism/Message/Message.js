@@ -112,8 +112,8 @@ export default function Message() {
                 <div className="sidebar-message-menu">
                   <CardMessagePeoples
                     dataContact={dataContact}
-                    setContact={setChatList}
-                    contact={chatList}
+                    setChatList={setChatList}
+                    chatList={chatList}
                   />
                 </div>
               </div>
