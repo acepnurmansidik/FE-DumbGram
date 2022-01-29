@@ -27,7 +27,7 @@ export default function ModalLoginShow(props) {
     const response = await setLogin(form);
     if (response.status === "success") {
       // show notification
-      setNotification(response.status, "Login successful");
+      setNotification(response.status, "Wohooo, Login successful");
       // hash using btoa
       const tokenBase64 = btoa(response.data.user.token);
       // set Cookie

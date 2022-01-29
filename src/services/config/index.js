@@ -9,9 +9,7 @@ export const requestAPI = async ({ url, method, data, headers, token }) => {
       Authorization: `Bearer ${jwtToken}`,
     };
   }
-  const response = await axios({ url, method, data, headers }).catch(
-    (err) => err.response
-  );
+  const response = await axios({ url, method, data, headers });
   // response > 300 akan error
   if (response.status > 300) {
     const res = {

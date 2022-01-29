@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import { setNotification } from "../../atom/notif";
 import Cookies from "js-cookie";
 import {
   getFollowers,
@@ -13,43 +14,60 @@ import {
 
 export default function SidebarProfile() {
   const router = useNavigate();
-  const [user, setUser] = useState({});
+  const [userProfile, setUserProfile] = useState({});
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
   const [post, setPost] = useState([]);
 
-  // GET info user profile
-  useEffect(async () => {
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (!token) {
+      setNotification("err", "Login is required");
+      router("/");
+    }
     // get & convert from cookies
-    const getTokenCookies = atob(Cookies.get("token"));
+    const getTokenCookies = atob(token);
     // decode token
     const getUserToken = jwt_decode(getTokenCookies);
-    // get u=info user from token
-    const getUserInfo = await getUserAPI(getUserToken.id);
-    // set user
-    setUser(getUserInfo.data.user);
   }, []);
 
-  // GET info user followers
+  // GET info user profile
+  useEffect(async () => {
+    // get info user from token
+    const getUserInfo = await getUserAPI(getTokenId());
+    // set user
+    setUserProfile(getUserInfo.data.user);
+  }, []);
+
+  // // GET info user followers
   useEffect(async () => {
     // get followers
-    const dataFollowers = await getFollowers(user.id);
+    const dataFollowers = await getFollowers(getTokenId());
     setFollowers(dataFollowers.data.followers);
   }, []);
 
   // GET info user following
   useEffect(async () => {
     // get following
-    const getFollowing = await getFollowings(user.id);
+    const getFollowing = await getFollowings(getTokenId());
     setFollowing(getFollowing.data.following);
   }, []);
 
   // GET info user post
   useEffect(async () => {
     // get following
-    const getPost = await getPosts(user.id);
+    const getPost = await getPosts(getTokenId());
     setPost(getPost.data.feed);
   }, []);
+
+  // FUNCTION ========================================================
+  const getTokenId = () => {
+    // get & convert from cookies
+    const getTokenCookies = atob(Cookies.get("token"));
+    // decode token
+    const getUserToken = jwt_decode(getTokenCookies);
+    return getUserToken.id;
+  };
 
   const handleLogOut = () => {
     Cookies.remove("token");
@@ -83,8 +101,13 @@ export default function SidebarProfile() {
             </div>
             <div className="sidebar-menu-info">
               <div className="sidebar-img-profile">
-                {user.image ? (
-                  <img src={`${user.image}`} alt="" width={180} height={180} />
+                {userProfile.image ? (
+                  <img
+                    src={`${userProfile.image}`}
+                    alt=""
+                    width={180}
+                    height={180}
+                  />
                 ) : (
                   <img
                     src="/assets/img/no-image.jpg"
@@ -95,8 +118,8 @@ export default function SidebarProfile() {
                 )}
               </div>
               <div className="sidebar-user-info">
-                <h4>{user.fullname}</h4>
-                <p>{user.username}</p>
+                <h4>{userProfile.fullname}</h4>
+                <p>{userProfile.username}</p>
               </div>
               <div className="sidebar-info-followers">
                 <div className="followers-branch">
@@ -115,7 +138,7 @@ export default function SidebarProfile() {
             </div>
             <hr className="dropdown-divider" />
             <div className="sidebar-bio-user">
-              <p id="bio-sidebar">{user.bio}</p>
+              <p id="bio-sidebar">{userProfile.bio}</p>
             </div>
             <hr className="dropdown-divider" />
             <div className="sidebar-profile-nav">
