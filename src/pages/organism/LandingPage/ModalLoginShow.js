@@ -5,6 +5,12 @@ import { toast } from "react-toastify";
 
 export default function ModalLoginShow(props) {
   const router = useNavigate();
+  const { setModalRegister, setModalLogin } = props;
+
+  const handleOpenModal = () => {
+    setModalLogin(false);
+    setModalRegister(true);
+  };
 
   const handelOnSubmit = () => {
     toast.success("Wohoo, login success", {
@@ -56,7 +62,10 @@ export default function ModalLoginShow(props) {
               Submit
             </Button>
             <Form.Group className="mb-2 mt-3" controlId="formBasicPassword">
-              <Form.Text className="text-muted">
+              <Form.Text
+                className="text-muted text-pointer"
+                onClick={handleOpenModal}
+              >
                 Don't have an account ? Klik Here
               </Form.Text>
             </Form.Group>

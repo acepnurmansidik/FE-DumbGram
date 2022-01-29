@@ -86,6 +86,8 @@ export default function LandingPage() {
                   <ModalLoginShow
                     show={modalLogin}
                     onHide={() => setModalLogin(false)}
+                    setModalRegister={setModalRegister}
+                    setModalLogin={setModalLogin}
                   />
 
                   {/* BTN & MODAL REGISTER */}
@@ -97,6 +99,8 @@ export default function LandingPage() {
                   <ModalRegisterShow
                     show={modalRegsiter}
                     onHide={() => setModalRegister(false)}
+                    setModalRegister={setModalRegister}
+                    setModalLogin={setModalLogin}
                   />
                 </div>
               </Row>
