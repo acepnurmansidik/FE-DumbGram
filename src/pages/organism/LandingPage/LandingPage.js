@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import Masonry from "react-masonry-css";
 import ModalRegisterShow from "./ModalRegisterShow";
 import ModalLoginShow from "./ModalLoginShow";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
+  const router = useNavigate();
   const [modalLogin, setModalLogin] = useState(false);
   const [modalRegsiter, setModalRegister] = useState(false);
 
@@ -37,6 +40,13 @@ export default function LandingPage() {
       imageUrl: "Rectangle 12.png",
     },
   ];
+
+  // validation if login
+  useEffect(() => {
+    if (Cookies.get("token")) {
+      router("/feed");
+    }
+  }, [router]);
 
   const breakpointColumnsObj = {
     default: 3,

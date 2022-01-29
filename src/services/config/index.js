@@ -9,7 +9,7 @@ export const requestAPI = async ({ url, method, data, headers }) => {
     const res = {
       error: true,
       status: "failed",
-      message: response.message.statusText,
+      message: response,
       data: null,
     };
     return res;

@@ -10,3 +10,12 @@ export const setRegister = (data) => {
 
   return requestAPI({ url, method: "POST", data, headers });
 };
+
+export const setLogin = (data) => {
+  const url = `${ROOT_API}/login`;
+  let headers = {
+    "Content-type": "application/json",
+  };
+
+  return requestAPI({ url, method: "POST", data, headers });
+};

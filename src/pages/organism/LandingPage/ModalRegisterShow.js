@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { setRegister } from "../../../services/auth";
-import { toast } from "react-toastify";
+import { setNotification } from "../../atom/notif";
 
 export default function ModalRegisterShow(props) {
   const { setModalRegister, setModalLogin } = props;
@@ -23,18 +23,14 @@ export default function ModalRegisterShow(props) {
     // send form data to API
     const response = await setRegister(form);
     if (response.status === "success") {
-      toast.success("Account registered successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
+      // show notification
+      setNotification(response.status, "Account registered successfully");
+      // close modal register
+      setModalRegister(false);
+    } else {
+      // show notification
+      setNotification(response.status, response.message.statusText);
     }
-    setModalRegister(false);
-    console.log(response);
   };
 
   const handleOnChange = (e) => {
