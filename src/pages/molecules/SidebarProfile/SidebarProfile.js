@@ -1,8 +1,24 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import { Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import Cookies from "js-cookie";
+import { getUserAPI } from "../../../services/user";
 
 export default function SidebarProfile() {
+  const [user, setUser] = useState({});
+
+  useEffect(async () => {
+    // get & convert from cookies
+    const getTokenCookies = atob(Cookies.get("token"));
+    // decode token
+    const getUserToken = jwt_decode(getTokenCookies);
+    // get u=info user from token
+    const getUserInfo = await getUserAPI(getUserToken.id);
+    // set user
+    setUser(getUserInfo.data.user);
+  }, []);
   return (
     <>
       <Col sm={4} className="sidebar-profile-container">
@@ -30,11 +46,11 @@ export default function SidebarProfile() {
             </div>
             <div className="sidebar-menu-info">
               <div className="sidebar-img-profile">
-                <img src="/assets/img/Rectangle 4.png" alt="" />
+                <img src="/assets/img/no-image.jpg" alt="" />
               </div>
               <div className="sidebar-user-info">
-                <h4>Lisa</h4>
-                <p>@lalisa_</p>
+                <h4>{user.fullname}</h4>
+                <p>{user.username}</p>
               </div>
               <div className="sidebar-info-followers">
                 <div className="followers-branch">
@@ -53,7 +69,7 @@ export default function SidebarProfile() {
             </div>
             <hr className="dropdown-divider" />
             <div className="sidebar-bio-user">
-              <p>Okay</p>
+              <p id="bio-sidebar">{user.bio}</p>
             </div>
             <hr className="dropdown-divider" />
             <div className="sidebar-profile-nav">

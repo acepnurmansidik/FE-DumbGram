@@ -79,3 +79,7 @@
   text-decoration: none;
   font-size: 1rem;
 }
+.sidebar-user-info p,
+.sidebar-user-info h4 {
+  text-align: center;
+}

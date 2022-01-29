@@ -1,6 +1,14 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
-export const requestAPI = async ({ url, method, data, headers }) => {
+export const requestAPI = async ({ url, method, data, headers, token }) => {
+  if (token) {
+    const jwtToken = atob(Cookies.get("token"));
+    headers = {
+      ...headers,
+      Authorization: `Bearer ${jwtToken}`,
+    };
+  }
   const response = await axios({ url, method, data, headers }).catch(
     (err) => err.response
   );
