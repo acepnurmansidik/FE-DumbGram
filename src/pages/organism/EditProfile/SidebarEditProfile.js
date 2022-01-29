@@ -1,8 +1,65 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import { Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { setNotification, getTokenId } from "../../atom/notif";
+import {
+  getFollowers,
+  getUserAPI,
+  getFollowings,
+  getPosts,
+} from "../../../services/user";
 
 export default function SidebarEditProfile() {
+  const router = useNavigate();
+  const [userProfile, setUserProfile] = useState({});
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
+  const [post, setPost] = useState([]);
+
+  useEffect(() => {
+    if (!Cookies.get("token")) {
+      setNotification("err", "Login is required");
+      router("/");
+    }
+  }, []);
+
+  // GET info user profile
+  useEffect(async () => {
+    // get info user from token
+    const getUserInfo = await getUserAPI(getTokenId());
+    // set user
+    setUserProfile(getUserInfo.data.user);
+  }, []);
+
+  // // GET info user followers
+  useEffect(async () => {
+    // get followers
+    const dataFollowers = await getFollowers(getTokenId());
+    setFollowers(dataFollowers.data.followers);
+  }, []);
+
+  // GET info user following
+  useEffect(async () => {
+    // get following
+    const getFollowing = await getFollowings(getTokenId());
+    setFollowing(getFollowing.data.following);
+  }, []);
+
+  // GET info user post
+  useEffect(async () => {
+    // get following
+    const getPost = await getPosts(getTokenId());
+    setPost(getPost.data.feed);
+  }, []);
+
+  // FUNCTION ========================================================
+
+  const handleLogOut = () => {
+    Cookies.remove("token");
+    router("/");
+  };
   return (
     <>
       <Col sm={4} className="sidebar-profile-container">
@@ -24,30 +81,44 @@ export default function SidebarEditProfile() {
           <div className="sidebar-menu-home mt-5">
             <div className="sidebar-menu-info">
               <div className="sidebar-img-profile">
-                <img src="/assets/img/Rectangle 4.png" alt="" />
+                {userProfile.image ? (
+                  <img
+                    src={`${userProfile.image}`}
+                    alt=""
+                    width={180}
+                    height={180}
+                  />
+                ) : (
+                  <img
+                    src="/assets/img/no-image.jpg"
+                    alt=""
+                    width={180}
+                    height={180}
+                  />
+                )}
               </div>
               <div className="sidebar-user-info">
-                <h4>Lisa</h4>
-                <p>@lalisa_</p>
+                <h4>{userProfile.fullname}</h4>
+                <p>{userProfile.username}</p>
               </div>
               <div className="sidebar-info-followers">
                 <div className="followers-branch">
                   <p>Post</p>
-                  <p>5</p>
+                  <p>{post.length}</p>
                 </div>
                 <div className="followers-branch">
                   <p>Followers</p>
-                  <p>5</p>
+                  <p>{followers.length}</p>
                 </div>
                 <div className="followers-branch">
                   <p>Following</p>
-                  <p>5</p>
+                  <p>{following.length}</p>
                 </div>
               </div>
             </div>
             <hr className="dropdown-divider" />
             <div className="sidebar-bio-user">
-              <p>Okay</p>
+              <p id="bio-sidebar">{userProfile.bio}</p>
             </div>
             <hr className="dropdown-divider" />
             <div className="sidebar-profile-nav">
@@ -67,7 +138,7 @@ export default function SidebarEditProfile() {
             <hr className="dropdown-divider" />
             <div className="sidebar-btn-logout">
               <img src="/assets/icons/logout.svg" alt="" />
-              <Link to="/" className="btn-link-basic">
+              <Link to="/" className="btn-link-basic" onClick={handleLogOut}>
                 {" Logout"}
               </Link>
             </div>
