@@ -4,11 +4,20 @@ import { Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
-import { getUserAPI } from "../../../services/user";
+import {
+  getFollowers,
+  getUserAPI,
+  getFollowings,
+  getPosts,
+} from "../../../services/user";
 
 export default function SidebarProfile() {
   const [user, setUser] = useState({});
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
+  const [post, setPost] = useState([]);
 
+  // GET info user profile
   useEffect(async () => {
     // get & convert from cookies
     const getTokenCookies = atob(Cookies.get("token"));
@@ -19,6 +28,28 @@ export default function SidebarProfile() {
     // set user
     setUser(getUserInfo.data.user);
   }, []);
+
+  // GET info user followers
+  useEffect(async () => {
+    // get followers
+    const dataFollowers = await getFollowers(user.id);
+    setFollowers(dataFollowers.data.followers);
+  }, []);
+
+  // GET info user following
+  useEffect(async () => {
+    // get following
+    const getFollowing = await getFollowings(user.id);
+    setFollowing(getFollowing.data.following);
+  }, []);
+
+  // GET info user post
+  useEffect(async () => {
+    // get following
+    const getPost = await getPosts(user.id);
+    setPost(getPost.data.feed);
+  }, []);
+
   return (
     <>
       <Col sm={4} className="sidebar-profile-container">
@@ -46,7 +77,16 @@ export default function SidebarProfile() {
             </div>
             <div className="sidebar-menu-info">
               <div className="sidebar-img-profile">
-                <img src="/assets/img/no-image.jpg" alt="" />
+                {user.image ? (
+                  <img src={`${user.image}`} alt="" width={180} height={180} />
+                ) : (
+                  <img
+                    src="/assets/img/no-image.jpg"
+                    alt=""
+                    width={180}
+                    height={180}
+                  />
+                )}
               </div>
               <div className="sidebar-user-info">
                 <h4>{user.fullname}</h4>
@@ -55,15 +95,15 @@ export default function SidebarProfile() {
               <div className="sidebar-info-followers">
                 <div className="followers-branch">
                   <p>Post</p>
-                  <p>5</p>
+                  <p>{post.length}</p>
                 </div>
                 <div className="followers-branch">
                   <p>Followers</p>
-                  <p>5</p>
+                  <p>{followers.length}</p>
                 </div>
                 <div className="followers-branch">
                   <p>Following</p>
-                  <p>5</p>
+                  <p>{following.length}</p>
                 </div>
               </div>
             </div>
