@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
 import {
@@ -12,6 +12,7 @@ import {
 } from "../../../services/user";
 
 export default function SidebarProfile() {
+  const router = useNavigate();
   const [user, setUser] = useState({});
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
@@ -49,6 +50,11 @@ export default function SidebarProfile() {
     const getPost = await getPosts(user.id);
     setPost(getPost.data.feed);
   }, []);
+
+  const handleLogOut = () => {
+    Cookies.remove("token");
+    router("/");
+  };
 
   return (
     <>
@@ -129,7 +135,7 @@ export default function SidebarProfile() {
             <hr className="dropdown-divider" />
             <div className="sidebar-btn-logout">
               <img src="/assets/icons/logout.svg" alt="" />
-              <Link to="/" className="btn-link-basic">
+              <Link to="/" className="btn-link-basic" onClick={handleLogOut}>
                 {" Logout"}
               </Link>
             </div>
