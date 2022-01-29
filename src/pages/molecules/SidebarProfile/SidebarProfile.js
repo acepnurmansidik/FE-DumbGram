@@ -2,9 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
-import { setNotification } from "../../atom/notif";
 import Cookies from "js-cookie";
+import { setNotification, getTokenId } from "../../atom/notif";
 import {
   getFollowers,
   getUserAPI,
@@ -20,15 +19,10 @@ export default function SidebarProfile() {
   const [post, setPost] = useState([]);
 
   useEffect(() => {
-    const token = Cookies.get("token");
-    if (!token) {
+    if (!Cookies.get("token")) {
       setNotification("err", "Login is required");
       router("/");
     }
-    // get & convert from cookies
-    const getTokenCookies = atob(token);
-    // decode token
-    const getUserToken = jwt_decode(getTokenCookies);
   }, []);
 
   // GET info user profile
@@ -61,13 +55,6 @@ export default function SidebarProfile() {
   }, []);
 
   // FUNCTION ========================================================
-  const getTokenId = () => {
-    // get & convert from cookies
-    const getTokenCookies = atob(Cookies.get("token"));
-    // decode token
-    const getUserToken = jwt_decode(getTokenCookies);
-    return getUserToken.id;
-  };
 
   const handleLogOut = () => {
     Cookies.remove("token");
