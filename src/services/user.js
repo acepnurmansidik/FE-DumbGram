@@ -79,4 +79,19 @@ export const createPost = async (data) => {
   });
 };
 
+export const setUpdateProfile = async (data, id) => {
+  const url = `${ROOT_API}/user/${id}`;
+  let headers = {
+    "Content-type": "multipart/form-data",
+  };
+
+  return requestAPI({
+    url,
+    method: "PATCH",
+    data,
+    headers,
+    token: true,
+  });
+};
+
 // ====================================================

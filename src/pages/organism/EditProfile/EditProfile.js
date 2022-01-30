@@ -1,9 +1,50 @@
-import React from "react";
+import Cookies from "js-cookie";
+import React, { useState } from "react";
+import jwt_decode from "jwt-decode";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { setUpdateProfile } from "../../../services/user";
 import Navigation from "../../molecules/Navigation/Navigation";
 import SidebarEditProfile from "./SidebarEditProfile";
+import { setNotification } from "../../atom/notif";
+import { useNavigate } from "react-router-dom";
 
 export default function EditProfile() {
+  const router = useNavigate();
+  const [image, setImage] = useState("");
+  const [imagePreview, setImagePreview] = useState("");
+  const [form, setForm] = useState({
+    bio: "",
+    email: "",
+    username: "",
+  });
+
+  const handleOnChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    const data = new FormData();
+
+    data.append("image", image);
+    data.append("bio", form.bio);
+    data.append("email", form.email);
+    data.append("username", form.username);
+
+    const dataUserCookies = atob(Cookies.get("token"));
+    const dataUser = jwt_decode(dataUserCookies);
+
+    const response = await setUpdateProfile(data, dataUser.id);
+    if (response.status === "success") {
+      setNotification("success", "Yeay, profile has been update");
+      router("/feed");
+    } else {
+      setNotification("err", "See you next time!");
+    }
+  };
   return (
     <>
       <Container fluid>
@@ -17,12 +58,20 @@ export default function EditProfile() {
               <Row>
                 <div className="menu-history-status">
                   <h1>Edit Profile</h1>
-                  <Form>
+                  <Form onSubmit={handleOnSubmit}>
                     <Form.Group
                       className="mb-3 edit-upload"
                       controlId="formBasicEmail"
                     >
-                      <Form.Control type="file" name="image" />
+                      <Form.Control
+                        type="file"
+                        name="image"
+                        onChange={(e) => {
+                          const img = e.target.files[0];
+                          setImagePreview(URL.createObjectURL(img));
+                          setImage(img);
+                        }}
+                      />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -31,6 +80,7 @@ export default function EditProfile() {
                         className="form-control"
                         placeholder="Email"
                         name="email"
+                        onChange={handleOnChange}
                       />
                     </Form.Group>
 
@@ -40,6 +90,7 @@ export default function EditProfile() {
                         className="form-control"
                         placeholder="Username"
                         name="username"
+                        onChange={handleOnChange}
                       />
                     </Form.Group>
 
@@ -53,6 +104,7 @@ export default function EditProfile() {
                           name="bio"
                           id="bio"
                           placeholder="Bio"
+                          onChange={handleOnChange}
                         ></textarea>
                       </Form.Group>
                     </Form.Group>
@@ -67,6 +119,9 @@ export default function EditProfile() {
                       controlId="formBasicPassword"
                     ></Form.Group>
                   </Form>
+                  {imagePreview ? (
+                    <img src={imagePreview} alt="" height={150} width={150} />
+                  ) : null}
                 </div>
               </Row>
             </Col>
