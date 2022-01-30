@@ -2,20 +2,25 @@
 import React, { useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
 import { Link } from "react-router-dom";
-import { Card, Modal } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { getComments, getPosts } from "../../../services/user";
 import { getTokenId } from "../../atom/notif";
-import NoImageProfile from "../../atom/NoImageProfile/NoImageProfile";
-import ImageProfile from "../../atom/ImageProfile/ImageProfile";
+import ModalDetailStatus from "../../molecules/ModalDetailStatus/ModalDetailStatus";
 
 export default function StatusPost({ dataStatus }) {
   const [modalShow, setModalShow] = React.useState(false);
   const [dataList, setDataList] = useState([]);
+  const [comments, setComments] = useState([]);
 
   useEffect(async () => {
     const response = await getPosts(getTokenId());
     setDataList(response.data.feed);
   }, []);
+
+  const handleGetComments = async (id) => {
+    const response = await getComments(id);
+    setComments(response.data.comments);
+  };
 
   const breakpointColumnsObj = {
     default: 3,
@@ -31,17 +36,21 @@ export default function StatusPost({ dataStatus }) {
         columnClassName="my-masonry-grid_column"
       >
         {dataList.map((item) => (
-          <div className="statusRell-img-item">
+          <div key={item.id} className="statusRell-img-item">
             <Card style={{ width: "100%" }}>
               <Card.Img
                 className="statusRell-btn-modal"
-                onClick={() => setModalShow(true)}
+                onClick={() => {
+                  setModalShow(true);
+                  handleGetComments(item.id);
+                }}
                 variant="top"
                 src={`${item.filename}`}
               />
-              <MyVerticallyCenteredModal
+              <ModalDetailStatus
                 show={modalShow}
                 onHide={() => setModalShow(false)}
+                comments={comments}
                 dataList={dataList}
               />
               <Card.Body>
@@ -85,79 +94,5 @@ export default function StatusPost({ dataStatus }) {
         ))}
       </Masonry>
     </div>
-  );
-}
-
-function MyVerticallyCenteredModal({ dataList, ...props }) {
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Body>
-        <div className="statusRell-modal-container">
-          <div className="modal-thumbnail-status">
-            <img src={dataList[0].filename} alt="" />
-          </div>
-          <div className="status-modalinfo">
-            <div className="owner-status-modal">
-              {dataList[0].user.image ? (
-                <ImageProfile image={dataList[0].user.image} />
-              ) : (
-                <NoImageProfile />
-              )}
-              <p>{dataList[0].caption}</p>
-            </div>
-            <hr />
-            <div className="modal-comments-response">
-              <div href="/people" className="modal-card-people">
-                <Link to="/profile-people" className="modal-card-img">
-                  <img src="/assets/img/Rectangle 8.png" alt="" />
-                </Link>
-                <div className="modal-info-people">
-                  <label htmlFor="" className="mt-3">
-                    Acep
-                  </label>
-                  <p>Hello lisa, today i'll eat you at your badroom.</p>
-                </div>
-              </div>
-              <div href="/people" className="modal-card-people">
-                <Link to="/profile-people" className="modal-card-img">
-                  <img src="/assets/img/Rectangle 8.png" alt="" />
-                </Link>
-                <div className="modal-info-people">
-                  <label htmlFor="" className="mt-3">
-                    Acep
-                  </label>
-                  <p>Hello lisa, today i'll eat you at your badroom.</p>
-                </div>
-              </div>
-            </div>
-            <Card.Body>
-              <div className="info-statusRell-modal">
-                <div className="statusRell-nav-btnModal">
-                  <div className="statusRell-nav-body">
-                    <div className="statusRell-nav-btn">
-                      <Link to="/feed">
-                        <img src="../assets/icons/love.svg" alt="" />
-                      </Link>
-                      <Link to="/feed">
-                        <img src="../assets/icons/comment.svg" alt="" />
-                      </Link>
-                      <Link to="/feed">
-                        <img src="../assets/icons/share.svg" alt="" />
-                      </Link>
-                    </div>
-                  </div>
-                  <p>1.234 Like</p>
-                </div>
-              </div>
-            </Card.Body>
-          </div>
-        </div>
-      </Modal.Body>
-    </Modal>
   );
 }

@@ -6,8 +6,6 @@ import SidebarProfile from "../../molecules/SidebarProfile/SidebarProfile";
 import StatusPost from "./StatusPost";
 
 export default function Feed() {
-  const [modalShow, setModalShow] = React.useState(false);
-
   let dataStatus = [
     {
       imageUrl: "Rectangle 6.png",
@@ -58,13 +56,6 @@ export default function Feed() {
       imageUrl: "Rectangle 12.png",
     },
   ];
-
-  const breakpointColumnsObj = {
-    default: 3,
-    1100: 3,
-    700: 2,
-    500: 1,
-  };
   return (
     <>
       <Container fluid>
