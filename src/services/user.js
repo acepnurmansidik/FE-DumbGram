@@ -64,4 +64,19 @@ export const getComments = async (id) => {
   });
 };
 
+export const createPost = async (data) => {
+  const url = `${ROOT_API}/feed`;
+  let headers = {
+    "Content-type": "multipart/form-data",
+  };
+
+  return requestAPI({
+    url,
+    method: "POST",
+    data,
+    headers,
+    token: true,
+  });
+};
+
 // ====================================================
