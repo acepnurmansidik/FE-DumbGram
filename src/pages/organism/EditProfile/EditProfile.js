@@ -15,7 +15,6 @@ export default function EditProfile() {
   const [form, setForm] = useState({
     bio: "",
     email: "",
-    username: "",
   });
 
   const handleOnChange = (e) => {
@@ -32,7 +31,6 @@ export default function EditProfile() {
     data.append("image", image);
     data.append("bio", form.bio);
     data.append("email", form.email);
-    data.append("username", form.username);
 
     const dataUserCookies = atob(Cookies.get("token"));
     const dataUser = jwt_decode(dataUserCookies);
@@ -71,16 +69,6 @@ export default function EditProfile() {
                           setImagePreview(URL.createObjectURL(img));
                           setImage(img);
                         }}
-                      />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                      <Form.Control
-                        type="email"
-                        className="form-control"
-                        placeholder="Email"
-                        name="email"
-                        onChange={handleOnChange}
                       />
                     </Form.Group>
 

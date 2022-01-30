@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ImageProfile from "../../atom/ImageProfile/ImageProfile";
 import NoImageProfile from "../../atom/NoImageProfile/NoImageProfile";
 
 export default function ModalDetailStatus({
-  comments,
   detailStatus,
+  commentList,
   ...props
 }) {
-  console.log(detailStatus);
+  const [imageOwner, setImageOwner] = useState({});
+
+  useEffect(() => {
+    // setImageOwner(detailStatus);
+    // console.log(imageOwner);
+  }, []);
+
+  console.log(detailStatus.user);
   return (
     <Modal
       {...props}
@@ -24,35 +31,33 @@ export default function ModalDetailStatus({
           </div>
           <div className="status-modalinfo">
             <div className="owner-status-modal">
-              {/* {detailStatus.user.image ? (
-                <ImageProfile image={detailStatus.user.image} />
-              ) : (
-                <NoImageProfile />
-              )} */}
-              {/* <ImageProfile image={detailStatus.user.image} /> */}
+              <img
+                src={"/assets/img/no-image.jpg"}
+                alt=""
+                width={180}
+                height={180}
+              />
               <p>{detailStatus.caption}</p>
             </div>
             <hr />
             <div className="modal-comments-response">
-              {/* {comments.map((item) => (
+              {commentList.map((comment) => (
                 <div href="/people" className="modal-card-people">
-                  {item.user.image ? (
-                    <Link to="/profile-people" className="modal-card-img">
-                      <ImageProfile image={item.user.image} />
-                    </Link>
-                  ) : (
-                    <Link to="/profile-people" className="modal-card-img">
+                  <Link to="/profile-people" className="modal-card-img">
+                    {comment.user.image ? (
+                      <ImageProfile image={comment.user.image} />
+                    ) : (
                       <NoImageProfile />
-                    </Link>
-                  )}
+                    )}
+                  </Link>
                   <div className="modal-info-people">
                     <label htmlFor="" className="mt-3">
-                      {item.user.fullname}
+                      {comment.user.username}
                     </label>
-                    <p>{item.comment}</p>
+                    <p>{comment.comment}</p>
                   </div>
                 </div>
-              ))} */}
+              ))}
             </div>
             <Card.Body>
               <div className="info-statusRell-modal">
@@ -70,7 +75,7 @@ export default function ModalDetailStatus({
                       </Link>
                     </div>
                   </div>
-                  <p>{detailStatus.like} Like</p>
+                  <p>12 Like</p>
                 </div>
               </div>
             </Card.Body>

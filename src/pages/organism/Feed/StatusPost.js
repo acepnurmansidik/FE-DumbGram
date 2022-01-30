@@ -16,20 +16,22 @@ export default function StatusPost({ dataStatus }) {
   useEffect(async () => {
     const response = await getPosts(getTokenId());
     setDataList(response.data.feed);
-  }, []);
+  }, [setDataList]);
 
+  // get comments status selected
   const handleGetComments = async (id) => {
     const response = await getComments(id);
     setComments(response.data.comments);
   };
 
-  const handleGetStatusDetail = (id) => {
-    dataList.map((item) => {
-      if (item.id === id) {
-        return setDetailStatus(item);
-      }
-    });
-  };
+  // get info status selected
+  // const handleGetStatusDetail = (id) => {
+  //   dataList.map((item) => {
+  //     if (item.id === id) {
+  //       return setDetailStatus(item);
+  //     }
+  //   });
+  // };
 
   const breakpointColumnsObj = {
     default: 3,
@@ -52,7 +54,7 @@ export default function StatusPost({ dataStatus }) {
                 onClick={() => {
                   setModalShow(true);
                   handleGetComments(item.id);
-                  handleGetStatusDetail(item.id);
+                  setDetailStatus(item);
                 }}
                 variant="top"
                 src={`${item.filename}`}
@@ -60,8 +62,8 @@ export default function StatusPost({ dataStatus }) {
               <ModalDetailStatus
                 show={modalShow}
                 onHide={() => setModalShow(false)}
-                comments={comments}
                 detailStatus={detailStatus}
+                commentList={comments}
               />
               <Card.Body>
                 <div className="statusRell-nav">
@@ -97,7 +99,7 @@ export default function StatusPost({ dataStatus }) {
               </Card.Body>
 
               <div className="statusRell-footer">
-                <p>{item.like} Likes</p>
+                <p>{item.like} 0 Likes</p>
               </div>
             </Card>
           </div>
