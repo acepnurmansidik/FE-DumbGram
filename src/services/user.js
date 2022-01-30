@@ -52,4 +52,16 @@ export const getPosts = async (id) => {
   });
 };
 
+export const getComments = async (id) => {
+  const url = `${ROOT_API}/comments/${id}`;
+  let headers = {};
+
+  return requestAPI({
+    url,
+    method: "GET",
+    headers,
+    token: true,
+  });
+};
+
 // ====================================================

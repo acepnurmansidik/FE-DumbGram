@@ -2,15 +2,16 @@
 import React, { useEffect, useState } from "react";
 import { Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
-import { setNotification } from "../../atom/notif";
 import Cookies from "js-cookie";
+import { getTokenId, setNotification } from "../../atom/notif";
 import {
   getFollowers,
   getUserAPI,
   getFollowings,
   getPosts,
 } from "../../../services/user";
+import NoImageProfile from "../../atom/NoImageProfile/NoImageProfile";
+import ImageProfile from "../../atom/ImageProfile/ImageProfile";
 
 export default function SidebarProfile() {
   const router = useNavigate();
@@ -25,10 +26,6 @@ export default function SidebarProfile() {
       setNotification("err", "Login is required");
       router("/");
     }
-    // get & convert from cookies
-    const getTokenCookies = atob(token);
-    // decode token
-    const getUserToken = jwt_decode(getTokenCookies);
   }, []);
 
   // GET info user profile
@@ -61,13 +58,6 @@ export default function SidebarProfile() {
   }, []);
 
   // FUNCTION ========================================================
-  const getTokenId = () => {
-    // get & convert from cookies
-    const getTokenCookies = atob(Cookies.get("token"));
-    // decode token
-    const getUserToken = jwt_decode(getTokenCookies);
-    return getUserToken.id;
-  };
 
   const handleLogOut = () => {
     Cookies.remove("token");
@@ -102,19 +92,9 @@ export default function SidebarProfile() {
             <div className="sidebar-menu-info">
               <div className="sidebar-img-profile">
                 {userProfile.image ? (
-                  <img
-                    src={`${userProfile.image}`}
-                    alt=""
-                    width={180}
-                    height={180}
-                  />
+                  <ImageProfile image={userProfile.image} />
                 ) : (
-                  <img
-                    src="/assets/img/no-image.jpg"
-                    alt=""
-                    width={180}
-                    height={180}
-                  />
+                  <NoImageProfile />
                 )}
               </div>
               <div className="sidebar-user-info">
