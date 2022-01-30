@@ -11,6 +11,7 @@ export default function StatusPost({ dataStatus }) {
   const [modalShow, setModalShow] = React.useState(false);
   const [dataList, setDataList] = useState([]);
   const [comments, setComments] = useState([]);
+  const [detailStatus, setDetailStatus] = useState({});
 
   useEffect(async () => {
     const response = await getPosts(getTokenId());
@@ -20,6 +21,14 @@ export default function StatusPost({ dataStatus }) {
   const handleGetComments = async (id) => {
     const response = await getComments(id);
     setComments(response.data.comments);
+  };
+
+  const handleGetStatusDetail = (id) => {
+    dataList.map((item) => {
+      if (item.id === id) {
+        return setDetailStatus(item);
+      }
+    });
   };
 
   const breakpointColumnsObj = {
@@ -43,6 +52,7 @@ export default function StatusPost({ dataStatus }) {
                 onClick={() => {
                   setModalShow(true);
                   handleGetComments(item.id);
+                  handleGetStatusDetail(item.id);
                 }}
                 variant="top"
                 src={`${item.filename}`}
@@ -51,7 +61,7 @@ export default function StatusPost({ dataStatus }) {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 comments={comments}
-                dataList={dataList}
+                detailStatus={detailStatus}
               />
               <Card.Body>
                 <div className="statusRell-nav">

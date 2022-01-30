@@ -4,7 +4,12 @@ import { Link } from "react-router-dom";
 import ImageProfile from "../../atom/ImageProfile/ImageProfile";
 import NoImageProfile from "../../atom/NoImageProfile/NoImageProfile";
 
-export default function ModalDetailStatus({ dataList, comments, ...props }) {
+export default function ModalDetailStatus({
+  comments,
+  detailStatus,
+  ...props
+}) {
+  console.log(detailStatus);
   return (
     <Modal
       {...props}
@@ -15,20 +20,21 @@ export default function ModalDetailStatus({ dataList, comments, ...props }) {
       <Modal.Body>
         <div className="statusRell-modal-container">
           <div className="modal-thumbnail-status">
-            <img src={dataList[0].filename} alt="" />
+            <img src={detailStatus.filename} alt="" />
           </div>
           <div className="status-modalinfo">
             <div className="owner-status-modal">
-              {dataList[0].user.image ? (
-                <ImageProfile image={dataList[0].user.image} />
+              {/* {detailStatus.user.image ? (
+                <ImageProfile image={detailStatus.user.image} />
               ) : (
                 <NoImageProfile />
-              )}
-              <p>{dataList[0].caption}</p>
+              )} */}
+              {/* <ImageProfile image={detailStatus.user.image} /> */}
+              <p>{detailStatus.caption}</p>
             </div>
             <hr />
             <div className="modal-comments-response">
-              {comments.map((item) => (
+              {/* {comments.map((item) => (
                 <div href="/people" className="modal-card-people">
                   {item.user.image ? (
                     <Link to="/profile-people" className="modal-card-img">
@@ -39,7 +45,6 @@ export default function ModalDetailStatus({ dataList, comments, ...props }) {
                       <NoImageProfile />
                     </Link>
                   )}
-
                   <div className="modal-info-people">
                     <label htmlFor="" className="mt-3">
                       {item.user.fullname}
@@ -47,7 +52,7 @@ export default function ModalDetailStatus({ dataList, comments, ...props }) {
                     <p>{item.comment}</p>
                   </div>
                 </div>
-              ))}
+              ))} */}
             </div>
             <Card.Body>
               <div className="info-statusRell-modal">
@@ -65,7 +70,7 @@ export default function ModalDetailStatus({ dataList, comments, ...props }) {
                       </Link>
                     </div>
                   </div>
-                  <p>{dataList[0].like} Like</p>
+                  <p>{detailStatus.like} Like</p>
                 </div>
               </div>
             </Card.Body>
