@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Cookies from "js-cookie";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { setUpdateProfile } from "../../../services/user";
+import { getUserAPI, setUpdateProfile } from "../../../services/user";
 import Navigation from "../../molecules/Navigation/Navigation";
 import SidebarEditProfile from "./SidebarEditProfile";
 import { setNotification } from "../../atom/notif";
@@ -10,12 +11,27 @@ import { useNavigate } from "react-router-dom";
 
 export default function EditProfile() {
   const router = useNavigate();
+  const [userInfo, setUserInfo] = useState({});
   const [image, setImage] = useState("");
-  const [imagePreview, setImagePreview] = useState("");
+  const [imagePreview, setImagePreview] = useState(null);
   const [form, setForm] = useState({
     bio: "",
+    username: "",
     email: "",
   });
+
+  // GET data user
+  useEffect(async () => {
+    let userToken = atob(Cookies.get("token"));
+    userToken = jwt_decode(userToken);
+    const response = await getUserAPI(userToken.id);
+    setUserInfo(response.data.user);
+  }, []);
+
+  // useEffect(async () => {
+  //   // setImagePreview(URL.createObjectURL(userInfo.image));
+  //   // setImage(userInfo.image);
+  // }, []);
 
   const handleOnChange = (e) => {
     setForm({
@@ -30,6 +46,7 @@ export default function EditProfile() {
 
     data.append("image", image);
     data.append("bio", form.bio);
+    data.append("username", form.username);
     data.append("email", form.email);
 
     const dataUserCookies = atob(Cookies.get("token"));
@@ -76,8 +93,20 @@ export default function EditProfile() {
                       <Form.Control
                         type="text"
                         className="form-control"
+                        placeholder="Email"
+                        name="email"
+                        value={`${userInfo.email}`}
+                        onChange={handleOnChange}
+                      />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                      <Form.Control
+                        type="text"
+                        className="form-control"
                         placeholder="Username"
                         name="username"
+                        value={`${userInfo.username}`}
                         onChange={handleOnChange}
                       />
                     </Form.Group>
@@ -92,6 +121,7 @@ export default function EditProfile() {
                           name="bio"
                           id="bio"
                           placeholder="Bio"
+                          value={`${userInfo.bio}`}
                           onChange={handleOnChange}
                         ></textarea>
                       </Form.Group>
@@ -109,7 +139,14 @@ export default function EditProfile() {
                   </Form>
                   {imagePreview ? (
                     <img src={imagePreview} alt="" height={150} width={150} />
-                  ) : null}
+                  ) : (
+                    <img
+                      src={`http://localhost:5000/uploads/${userInfo.image}`}
+                      alt=""
+                      height={150}
+                      width={150}
+                    />
+                  )}
                 </div>
               </Row>
             </Col>

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Card, Modal } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Card, Form, Modal } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { setPostComment } from "../../../services/user";
 import ImageProfile from "../../atom/ImageProfile/ImageProfile";
 import NoImageProfile from "../../atom/NoImageProfile/NoImageProfile";
 
@@ -9,14 +10,32 @@ export default function ModalDetailStatus({
   commentList,
   ...props
 }) {
-  const [imageOwner, setImageOwner] = useState({});
+  const router = useNavigate();
+  const [form, setForm] = useState({
+    comment: "",
+  });
 
-  useEffect(() => {
-    // setImageOwner(detailStatus);
-    // console.log(imageOwner);
-  }, []);
+  const handelOnSubmit = async (e) => {
+    let data = {
+      ...form,
+      idFeed: detailStatus.id,
+    };
 
-  console.log(detailStatus.user);
+    await setPostComment(data);
+
+    router("/explore");
+  };
+
+  const handleOnChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleDetail = (id) => {
+    router(`/profile-people/${id}`);
+  };
   return (
     <Modal
       {...props}
@@ -42,14 +61,17 @@ export default function ModalDetailStatus({
             <hr />
             <div className="modal-comments-response">
               {commentList.map((comment) => (
-                <div href="/people" className="modal-card-people">
-                  <Link to="/profile-people" className="modal-card-img">
+                <div className="modal-card-people">
+                  <div
+                    onClick={() => handleDetail(comment.user.id)}
+                    className="modal-card-img"
+                  >
                     {comment.user.image ? (
                       <ImageProfile image={comment.user.image} />
                     ) : (
                       <NoImageProfile />
                     )}
-                  </Link>
+                  </div>
                   <div className="modal-info-people">
                     <label htmlFor="" className="mt-3">
                       {comment.user.username}
@@ -60,6 +82,15 @@ export default function ModalDetailStatus({
               ))}
             </div>
             <Card.Body>
+              <Form onSubmit={handelOnSubmit}>
+                <Form.Control
+                  type="text"
+                  className=""
+                  placeholder="comments"
+                  name="comment"
+                  onChange={handleOnChange}
+                />
+              </Form>
               <div className="info-statusRell-modal">
                 <div className="statusRell-nav-btnModal">
                   <div className="statusRell-nav-body">
@@ -75,7 +106,7 @@ export default function ModalDetailStatus({
                       </Link>
                     </div>
                   </div>
-                  <p>12 Like</p>
+                  <p>{detailStatus.like} Like</p>
                 </div>
               </div>
             </Card.Body>

@@ -1,8 +1,49 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import Cookies from "js-cookie";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  getUserAPI,
+  getFollowings,
+  getFollowers,
+  getPosts,
+} from "../../../services/user";
+import ImageProfile from "../../atom/ImageProfile/ImageProfile";
+import NoImageProfile from "../../atom/NoImageProfile/NoImageProfile";
 
-export default function SidebarProfilePeople() {
+export default function SidebarProfilePeople(props) {
+  const { paramID } = props;
+  const router = useNavigate();
+  const [userInfo, setUserInfo] = useState("");
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
+  const [post, setPost] = useState([]);
+
+  useEffect(async () => {
+    const response = await getUserAPI(paramID);
+    setUserInfo(response.data.user);
+  }, []);
+
+  useEffect(async () => {
+    const response = await getFollowers(paramID);
+    setFollowers(response.data.followers);
+  }, []);
+
+  useEffect(async () => {
+    const response = await getFollowings(paramID);
+    setFollowing(response.data.following);
+  }, []);
+
+  useEffect(async () => {
+    const response = await getPosts(paramID);
+    setPost(response.data.feed);
+  }, []);
+
+  const handleLogOut = () => {
+    Cookies.remove("token");
+    router("/");
+  };
   return (
     <>
       <Col sm={4} className="sidebar-profile-container">
@@ -30,11 +71,15 @@ export default function SidebarProfilePeople() {
             </div>
             <div className="sidebar-menu-info">
               <div className="sidebar-img-profile">
-                <img src="/assets/img/Rectangle 4.png" alt="" />
+                {userInfo.image ? (
+                  <ImageProfile image={userInfo.image} />
+                ) : (
+                  <NoImageProfile />
+                )}
               </div>
               <div className="sidebar-user-info">
-                <h4>Lisa</h4>
-                <p>@lalisa_</p>
+                <h4>{userInfo.fullname}</h4>
+                <p>@{userInfo.username}</p>
               </div>
               <div className="sidebar-btn-follow">
                 <Form className="sidebar-btn-pp">
@@ -60,21 +105,21 @@ export default function SidebarProfilePeople() {
               <div className="sidebar-info-followers">
                 <div className="followers-branch">
                   <p>Post</p>
-                  <p>5</p>
+                  <p>{post.length}</p>
                 </div>
                 <div className="followers-branch">
                   <p>Followers</p>
-                  <p>5</p>
+                  <p>{followers.length}</p>
                 </div>
                 <div className="followers-branch">
                   <p>Following</p>
-                  <p>5</p>
+                  <p>{following.length}</p>
                 </div>
               </div>
             </div>
             <hr className="dropdown-divider" />
             <div className="sidebar-bio-user">
-              <p>Okay</p>
+              <p>{userInfo.bio}</p>
             </div>
             <hr className="dropdown-divider" />
             <div className="sidebar-profile-nav">
@@ -94,7 +139,7 @@ export default function SidebarProfilePeople() {
             <hr className="dropdown-divider" />
             <div className="sidebar-btn-logout">
               <img src="/assets/icons/logout.svg" alt="" />
-              <Link to="/" className="btn-link-basic">
+              <Link to="/" className="btn-link-basic" onClick={handleLogOut}>
                 {" Logout"}
               </Link>
             </div>

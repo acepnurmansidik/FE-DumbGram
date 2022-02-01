@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
 import { Link } from "react-router-dom";
 import { Card } from "react-bootstrap";
-import { getComments, getPosts } from "../../../services/user";
+import { getComments, getPosts, getUserAPI } from "../../../services/user";
 import { getTokenId } from "../../atom/notif";
 import ModalDetailStatus from "../../molecules/ModalDetailStatus/ModalDetailStatus";
 
-export default function StatusPost({ dataStatus }) {
+export default function StatusPost({ paramID }) {
   const [modalShow, setModalShow] = React.useState(false);
   const [dataList, setDataList] = useState([]);
   const [comments, setComments] = useState([]);
@@ -17,6 +17,11 @@ export default function StatusPost({ dataStatus }) {
     const response = await getPosts(getTokenId());
     setDataList(response.data.feed);
   }, [setDataList]);
+
+  useEffect(async () => {
+    const response = await getUserAPI(paramID);
+    setDetailStatus(response.data.user);
+  }, []);
 
   // get comments status selected
   const handleGetComments = async (id) => {

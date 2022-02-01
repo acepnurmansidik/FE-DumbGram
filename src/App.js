@@ -21,7 +21,7 @@ export default function App() {
           <Route exact path="/create-post" element={<CreatePost />} />
           <Route exact path="/edit-profile" element={<EditProfile />} />
           <Route exact path="/explore" element={<Explore />} />
-          <Route exact path="/profile-people" element={<ProfilePeople />} />
+          <Route exact path="/profile-people/:id" element={<ProfilePeople />} />
           <Route exact path="/message" element={<Message />} />
         </Routes>
       </Router>
