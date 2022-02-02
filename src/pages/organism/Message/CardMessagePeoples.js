@@ -1,22 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
-// import { getChatList } from "../../../services/user";
+import React from "react";
 
 export default function CardMessagePeoples({
   dataContact,
   setChatList,
   chatList,
 }) {
-  // const [chats, setChats] = useState({});
   const clickContact = (id) => {
     const data = dataContact.find((dateItem) => dateItem.idReceiver === id);
     setChatList(data);
   };
-
-  // useEffect(async () => {
-  //   const response = await getChatList();
-  //   setChats(response.data.chatList);
-  // }, []);
   return (
     <>
       {dataContact.map((dateItem) => (

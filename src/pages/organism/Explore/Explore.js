@@ -2,19 +2,23 @@
 import React, { useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
 import { Card, Col, Container, Row } from "react-bootstrap";
-import { getAllPosts, getComments } from "../../../services/user";
+import { getComments } from "../../../services/user";
+import { setLikeFeed, getLikeFeed, getAllFeeds } from "../../../services/feed";
 import Navigation from "../../molecules/Navigation/Navigation";
 import SidebarProfile from "../../molecules/SidebarProfile/SidebarProfile";
-import ModalDetailStatus from "../../molecules/ModalDetailStatus/ModalDetailStatus";
+import ModalExplore from "./ModalExplore";
 
 export default function Explore() {
   const [modalShow, setModalShow] = React.useState(false);
   const [dataList, setDataList] = useState([]);
   const [comments, setComments] = useState([]);
-  const [detailStatus, setDetailStatus] = useState({});
+  const [detailStatus, setDetailStatus] = useState([]);
+  const [countLike, setCountLike] = useState([]);
+  const [user, setUser] = useState({});
 
+  // GET all post
   useEffect(async () => {
-    const response = await getAllPosts();
+    const response = await getAllFeeds();
     setDataList(response.data.feed);
   }, []);
 
@@ -22,6 +26,18 @@ export default function Explore() {
   const handleGetComments = async (id) => {
     const response = await getComments(id);
     setComments(response.data.comments);
+  };
+
+  // POST liker
+  const handleLike = async (id) => {
+    await setLikeFeed(id);
+    window.location.reload();
+  };
+
+  // GET Like feed
+  const handleGetLike = async (id) => {
+    const response = await getLikeFeed(id);
+    setCountLike(response.data.likes);
   };
 
   const breakpointColumnsObj = {
@@ -58,16 +74,21 @@ export default function Explore() {
                             onClick={() => {
                               setModalShow(true);
                               handleGetComments(item.id);
+                              handleGetLike(item.id);
                               setDetailStatus(item);
+                              setUser(item.user);
                             }}
                             variant="top"
                             src={`${item.filename}`}
                           />
-                          <ModalDetailStatus
+                          <ModalExplore
                             show={modalShow}
                             onHide={() => setModalShow(false)}
                             detailStatus={detailStatus}
                             commentList={comments}
+                            countLike={countLike}
+                            handleLike={handleLike}
+                            user={user}
                           />
                         </Card>
                       </div>

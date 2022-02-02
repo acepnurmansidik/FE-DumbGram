@@ -8,6 +8,9 @@ import {
   getFollowings,
   getFollowers,
   getPosts,
+  getStatusFollow,
+  actionFollow,
+  actionUnFollow,
 } from "../../../services/user";
 import ImageProfile from "../../atom/ImageProfile/ImageProfile";
 import NoImageProfile from "../../atom/NoImageProfile/NoImageProfile";
@@ -15,34 +18,59 @@ import NoImageProfile from "../../atom/NoImageProfile/NoImageProfile";
 export default function SidebarProfilePeople(props) {
   const { paramID } = props;
   const router = useNavigate();
-  const [userInfo, setUserInfo] = useState("");
   const [followers, setFollowers] = useState([]);
+  const [statusFollow, setStatusFollow] = useState({});
   const [following, setFollowing] = useState([]);
   const [post, setPost] = useState([]);
+  const [userInfo, setUserInfo] = useState("");
 
+  // GET user info
   useEffect(async () => {
     const response = await getUserAPI(paramID);
     setUserInfo(response.data.user);
   }, []);
 
+  // GET user followers
   useEffect(async () => {
     const response = await getFollowers(paramID);
     setFollowers(response.data.followers);
   }, []);
 
+  // GET user following
   useEffect(async () => {
     const response = await getFollowings(paramID);
     setFollowing(response.data.following);
   }, []);
 
+  // GET user post
   useEffect(async () => {
     const response = await getPosts(paramID);
     setPost(response.data.feed);
   }, []);
 
+  // GET status follow
+  useState(async () => {
+    const response = await getStatusFollow(paramID);
+    setStatusFollow(response.data.follower);
+  }, []);
+
+  // handle button=====================
+
+  // handle unfollow
+  const handleBtnUnfollow = async () => {
+    await actionUnFollow(paramID);
+    window.location.reload();
+  };
+
+  // handle follow
+  const handleBtnFollow = async () => {
+    await actionFollow(paramID);
+    window.location.reload();
+  };
+
   const handleLogOut = () => {
     Cookies.remove("token");
-    router("/");
+    router(`/`);
   };
   return (
     <>
@@ -82,25 +110,35 @@ export default function SidebarProfilePeople(props) {
                 <p>@{userInfo.username}</p>
               </div>
               <div className="sidebar-btn-follow">
-                <Form className="sidebar-btn-pp">
+                <div className="sidebar-btn-pp">
                   <Row>
                     <Col>
                       <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Link to="/message" className="btn gradient-btn">
-                          Message
-                        </Link>
+                        <Button className="btn gradient-btn">Message</Button>
                       </Form.Group>
                     </Col>
 
                     <Col>
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Button className="unfollow-btn" type="submit">
+                      {statusFollow ? (
+                        <Button
+                          onClick={handleBtnUnfollow}
+                          className="unfollow-btn"
+                        >
                           Unfollow
                         </Button>
-                      </Form.Group>
+                      ) : (
+                        <Form>
+                          <Button
+                            onClick={handleBtnFollow}
+                            className="unfollow-btn"
+                          >
+                            Follow
+                          </Button>
+                        </Form>
+                      )}
                     </Col>
                   </Row>
-                </Form>
+                </div>
               </div>
               <div className="sidebar-info-followers">
                 <div className="followers-branch">

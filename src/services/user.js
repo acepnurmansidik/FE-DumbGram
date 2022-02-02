@@ -94,18 +94,6 @@ export const setUpdateProfile = async (data, id) => {
   });
 };
 
-export const getAllPosts = async () => {
-  const url = `${ROOT_API}/feeds`;
-  let headers = {};
-
-  return requestAPI({
-    url,
-    method: "GET",
-    headers,
-    token: true,
-  });
-};
-
 export const getChatList = async () => {
   const url = `${ROOT_API}/message-user`;
   let headers = {};

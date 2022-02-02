@@ -28,11 +28,6 @@ export default function EditProfile() {
     setUserInfo(response.data.user);
   }, []);
 
-  // useEffect(async () => {
-  //   // setImagePreview(URL.createObjectURL(userInfo.image));
-  //   // setImage(userInfo.image);
-  // }, []);
-
   const handleOnChange = (e) => {
     setForm({
       ...form,

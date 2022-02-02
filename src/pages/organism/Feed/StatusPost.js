@@ -1,9 +1,13 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import jwt_decode from "jwt-decode";
 import Masonry from "react-masonry-css";
 import { Link } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import { getComments, getPosts } from "../../../services/user";
+import { setLikeFeed, getLikeFeed } from "../../../services/feed";
 import { getTokenId } from "../../atom/notif";
 import ModalDetailStatus from "../../molecules/ModalDetailStatus/ModalDetailStatus";
 
@@ -11,18 +15,39 @@ export default function StatusPost({ dataStatus }) {
   const [modalShow, setModalShow] = React.useState(false);
   const [dataList, setDataList] = useState([]);
   const [comments, setComments] = useState([]);
+  const [countLike, setCountLike] = useState([]);
   const [detailStatus, setDetailStatus] = useState({});
+  const [userInfo, setUserInfo] = useState({});
 
+  // GET Post
   useEffect(async () => {
     const response = await getPosts(getTokenId());
     setDataList(response.data.feed);
   }, [setDataList]);
-
+  console.log(dataList);
+  // GET Like feed
+  const handleGetLike = async (id) => {
+    const response = await getLikeFeed(id);
+    setCountLike(response.data.likes);
+  };
   // get comments status selected
   const handleGetComments = async (id) => {
     const response = await getComments(id);
     setComments(response.data.comments);
   };
+
+  // POST liker
+  const handleLike = async (id) => {
+    await setLikeFeed(id);
+    window.location.reload();
+  };
+
+  // GET user from token
+  useEffect(async () => {
+    let userToken = atob(Cookies.get("token"));
+    userToken = jwt_decode(userToken);
+    setUserInfo(userToken);
+  }, []);
 
   const breakpointColumnsObj = {
     default: 3,
@@ -45,6 +70,7 @@ export default function StatusPost({ dataStatus }) {
                 onClick={() => {
                   setModalShow(true);
                   handleGetComments(item.id);
+                  handleGetLike(item.id);
                   setDetailStatus(item);
                 }}
                 variant="top"
@@ -55,6 +81,10 @@ export default function StatusPost({ dataStatus }) {
                 onHide={() => setModalShow(false)}
                 detailStatus={detailStatus}
                 commentList={comments}
+                countLike={countLike}
+                handleLike={handleLike}
+                setModalShow={setModalShow}
+                userInfo={userInfo}
               />
               <Card.Body>
                 <div className="statusRell-nav">
@@ -75,22 +105,39 @@ export default function StatusPost({ dataStatus }) {
                       <p>{item.user.username}</p>
                     </div>
                     <div className="statusRell-nav-btn">
-                      <Link to="/feed">
-                        <img src="../assets/icons/love.svg" alt="" />
-                      </Link>
-                      <Link to="/feed">
-                        <img src="../assets/icons/comment.svg" alt="" />
-                      </Link>
-                      <Link to="/feed">
-                        <img src="../assets/icons/share.svg" alt="" />
-                      </Link>
+                      <img
+                        onClick={() => handleLike(item.id)}
+                        className="text-pointer"
+                        src="../assets/icons/love.svg"
+                        alt=""
+                      />
+                      <img
+                        onClick={() => {
+                          setModalShow(true);
+                          handleGetComments(item.id);
+                          setDetailStatus(item);
+                        }}
+                        className="text-pointer"
+                        src="../assets/icons/comment.svg"
+                        alt=""
+                      />
+                      <img src="../assets/icons/share.svg" alt="" />
                     </div>
                   </div>
                 </div>
               </Card.Body>
 
               <div className="statusRell-footer">
-                <p>{item.like} 0 Likes</p>
+                {countLike.map((like) => {
+                  if (
+                    like.user.id === userInfo.id &&
+                    like.feed.id === item.id
+                  ) {
+                    return <p key={like.id}>{countLike.length} Like</p>;
+                  } else {
+                    return <p key={like.id}>0 Like</p>;
+                  }
+                })}
               </div>
             </Card>
           </div>

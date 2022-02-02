@@ -44,7 +44,7 @@ export default function Navigation() {
                     <img src="/assets/img/Rectangle 10.png" alt="" />
                   </div>
                   <div className="card-info-people">
-                    <label for="" className="mt-3">
+                    <label htmlFor="" className="mt-3">
                       Acep
                     </label>
                     <p>Hello lisa.</p>

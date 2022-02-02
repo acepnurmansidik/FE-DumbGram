@@ -1,37 +1,35 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 import React, { useEffect, useState } from "react";
 import { Card, Form, Modal } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setPostComment } from "../../../services/user";
 import ImageProfile from "../../atom/ImageProfile/ImageProfile";
 import NoImageProfile from "../../atom/NoImageProfile/NoImageProfile";
 
-export default function ModalDetailStatus({
+export default function ModalExplore({
   detailStatus,
   commentList,
   countLike,
   handleLike,
-  setModalShow,
-  userInfo,
+  user,
   ...props
 }) {
   const router = useNavigate();
-  const [likeShow, setLikeShow] = useState();
+  const [userToken, setUserToken] = useState({});
   const [form, setForm] = useState({
     comment: "",
   });
 
+  // GET User from token
   useEffect(() => {
-    countLike.map((like) => {
-      if (like.user.id === userInfo.id && like.feed.id === detailStatus.id) {
-        setLikeShow(true);
-      } else {
-        setLikeShow(false);
-      }
-    });
+    let userInfo = jwtDecode(atob(Cookies.get("token")));
+    setUserToken(userInfo);
   }, []);
 
+  // Handle===========================
   const handelOnSubmit = async (e) => {
     let data = {
       ...form,
@@ -66,10 +64,20 @@ export default function ModalDetailStatus({
           </div>
           <div className="status-modalinfo">
             <div className="owner-status-modal">
-              {userInfo.image ? (
-                <ImageProfile image={userInfo.image} />
+              {user.image ? (
+                userToken.id === user.id ? (
+                  <Link to={`/feed`}>
+                    <ImageProfile image={user.image} />
+                  </Link>
+                ) : (
+                  <Link to={`/profile-people/${user.id}`}>
+                    <ImageProfile image={user.image} />
+                  </Link>
+                )
               ) : (
-                <NoImageProfile />
+                <Link to={`/profile-people/${user.id}`}>
+                  <NoImageProfile />
+                </Link>
               )}
               <p>{detailStatus.caption}</p>
             </div>
@@ -110,27 +118,12 @@ export default function ModalDetailStatus({
                 <div className="statusRell-nav-btnModal">
                   <div className="statusRell-nav-body">
                     <div className="statusRell-nav-btn">
-                      {likeShow ? (
-                        <img
-                          key={detailStatus.id}
-                          onClick={() => {
-                            handleLike(detailStatus.id);
-                            setModalShow(false);
-                          }}
-                          src={`../assets/icons/loveColor.svg`}
-                          alt=""
-                        />
-                      ) : (
-                        <img
-                          key={detailStatus.id}
-                          onClick={() => {
-                            handleLike(detailStatus.id);
-                            setModalShow(false);
-                          }}
-                          src="../assets/icons/love.svg"
-                          alt=""
-                        />
-                      )}
+                      <img
+                        key={detailStatus.id}
+                        onClick={() => handleLike(detailStatus.id)}
+                        src="../assets/icons/love.svg"
+                        alt=""
+                      />
                       <img src="../assets/icons/comment.svg" alt="" />
                       <img src="../assets/icons/share.svg" alt="" />
                     </div>
