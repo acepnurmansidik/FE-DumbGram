@@ -1,13 +1,35 @@
-import React from "react";
-import { Dropdown } from "react-bootstrap";
+import React, { useState } from "react";
+import { Dropdown, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export default function Navigation() {
+  const [form, setForm] = useState({
+    search: "",
+  });
+
+  const handleOnChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handelOnSubmit = async () => {};
   return (
     <>
       <div className="menu-btn-nav">
         <div className="menu-nav-search">
-          <input type="text" placeholder="Search" />
+          <Form onSubmit={handelOnSubmit}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Control
+                type="text"
+                className="form-control"
+                placeholder="search"
+                name="search"
+                onChange={handleOnChange}
+              />
+            </Form.Group>
+          </Form>
         </div>
         <div className="menu-nav-btn">
           <div className="btn-group">

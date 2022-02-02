@@ -3,13 +3,15 @@ import React, { useEffect, useState } from "react";
 import { Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { setNotification, getTokenId } from "../../atom/notif";
+import { getTokenId, setNotification } from "../../atom/notif";
 import {
   getFollowers,
   getUserAPI,
   getFollowings,
   getPosts,
 } from "../../../services/user";
+import NoImageProfile from "../../atom/NoImageProfile/NoImageProfile";
+import ImageProfile from "../../atom/ImageProfile/ImageProfile";
 
 export default function SidebarEditProfile() {
   const router = useNavigate();
@@ -19,7 +21,8 @@ export default function SidebarEditProfile() {
   const [post, setPost] = useState([]);
 
   useEffect(() => {
-    if (!Cookies.get("token")) {
+    const token = Cookies.get("token");
+    if (!token) {
       setNotification("err", "Login is required");
       router("/");
     }
@@ -82,19 +85,9 @@ export default function SidebarEditProfile() {
             <div className="sidebar-menu-info">
               <div className="sidebar-img-profile">
                 {userProfile.image ? (
-                  <img
-                    src={`${userProfile.image}`}
-                    alt=""
-                    width={180}
-                    height={180}
-                  />
+                  <ImageProfile image={userProfile.image} />
                 ) : (
-                  <img
-                    src="/assets/img/no-image.jpg"
-                    alt=""
-                    width={180}
-                    height={180}
-                  />
+                  <NoImageProfile />
                 )}
               </div>
               <div className="sidebar-user-info">
