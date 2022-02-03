@@ -28,6 +28,7 @@ export default function EditProfile() {
     setUserInfo(response.data.user);
   }, []);
 
+  // Handling =====================================================
   const handleOnChange = (e) => {
     setForm({
       ...form,
@@ -40,9 +41,13 @@ export default function EditProfile() {
     const data = new FormData();
 
     data.append("image", image);
-    data.append("bio", form.bio);
-    data.append("username", form.username);
-    data.append("email", form.email);
+    form.bio ? data.append("bio", form.bio) : data.append("bio", userInfo.bio);
+    form.username
+      ? data.append("username", form.username)
+      : data.append("username", userInfo.username);
+    form.email
+      ? data.append("email", form.email)
+      : data.append("email", userInfo.email);
 
     const dataUserCookies = atob(Cookies.get("token"));
     const dataUser = jwt_decode(dataUserCookies);
@@ -90,7 +95,6 @@ export default function EditProfile() {
                         className="form-control"
                         placeholder="Email"
                         name="email"
-                        value={`${userInfo.email}`}
                         onChange={handleOnChange}
                       />
                     </Form.Group>
@@ -101,7 +105,6 @@ export default function EditProfile() {
                         className="form-control"
                         placeholder="Username"
                         name="username"
-                        value={`${userInfo.username}`}
                         onChange={handleOnChange}
                       />
                     </Form.Group>
@@ -116,7 +119,6 @@ export default function EditProfile() {
                           name="bio"
                           id="bio"
                           placeholder="Bio"
-                          value={`${userInfo.bio}`}
                           onChange={handleOnChange}
                         ></textarea>
                       </Form.Group>
