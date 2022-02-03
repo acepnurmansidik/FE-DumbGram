@@ -3,9 +3,11 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { setRegister } from "../../../services/auth";
 import { setNotification } from "../../atom/notif";
 
-export default function ModalRegisterShow(props) {
-  const { setModalRegister, setModalLogin } = props;
-
+export default function ModalRegisterShow({
+  setModalRegister,
+  setModalLogin,
+  ...props
+}) {
   const handleOpenModal = () => {
     setModalLogin(true);
     setModalRegister(false);

@@ -5,9 +5,11 @@ import { setLogin } from "../../../services/auth";
 import { setNotification } from "../../atom/notif";
 import Cookies from "js-cookie";
 
-export default function ModalLoginShow(props) {
-  const { setModalRegister, setModalLogin } = props;
-
+export default function ModalLoginShow({
+  setModalRegister,
+  setModalLogin,
+  ...props
+}) {
   const router = useNavigate();
   const [form, setForm] = useState({
     email: "",

@@ -122,8 +122,8 @@ export default function LandingPage() {
                   className="my-masonry-grid"
                   columnClassName="my-masonry-grid_column"
                 >
-                  {photosList.map((item) => (
-                    <div className="lp-img-item">
+                  {photosList.map((item, i) => (
+                    <div key={i} className="lp-img-item">
                       <img src={`../assets/img/${item.imageUrl}`} alt="" />
                     </div>
                   ))}
