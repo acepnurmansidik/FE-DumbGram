@@ -6,6 +6,7 @@
   background: #0b0b0b;
   color: #fff;
   font-weight: 400;
+  overflow: hidden;
 }
 
 .general-container {

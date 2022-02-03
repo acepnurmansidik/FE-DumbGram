@@ -9,27 +9,40 @@ import { setPostComment } from "../../../services/user";
 import ImageProfile from "../../atom/ImageProfile/ImageProfile";
 import NoImageProfile from "../../atom/NoImageProfile/NoImageProfile";
 
-export default function ModalExplore({
+export default function ProfilePeople({
   detailStatus,
   commentList,
   countLike,
   handleLike,
-  user,
+  setModalShow,
+  userInfo,
   ...props
 }) {
   const router = useNavigate();
-  const [userToken, setUserToken] = useState({});
+  const [user, setUser] = useState({});
+  const [likeShow, setLikeShow] = useState();
   const [form, setForm] = useState({
     comment: "",
   });
 
   // GET User from token
   useEffect(() => {
-    let userInfo = jwtDecode(atob(Cookies.get("token")));
-    setUserToken(userInfo);
+    let userTokenCookies = jwtDecode(atob(Cookies.get("token")));
+    setUser(userTokenCookies);
   }, []);
 
-  // Handle===========================
+  // compare
+  useEffect(() => {
+    countLike.map((like) => {
+      if (like.user.id === userInfo.id && like.feed.id === detailStatus.id) {
+        setLikeShow(true);
+      } else {
+        setLikeShow(false);
+      }
+    });
+  }, []);
+
+  // Handle ====================================================
   const handelOnSubmit = async (e) => {
     let data = {
       ...form,
@@ -45,7 +58,6 @@ export default function ModalExplore({
       [e.target.name]: e.target.value,
     });
   };
-
   return (
     <Modal
       {...props}
@@ -60,20 +72,20 @@ export default function ModalExplore({
           </div>
           <div className="status-modalinfo">
             <div className="owner-status-modal">
-              {user.image ? (
-                userToken.id === user.id ? (
-                  <Link to={`/feed`}>
-                    <ImageProfile className="text-pointer" image={user.image} />
-                  </Link>
-                ) : (
-                  <Link to={`/profile-people/${user.id}`}>
-                    <ImageProfile className="text-pointer" image={user.image} />
-                  </Link>
-                )
+              {userInfo.image ? (
+                <div
+                  className="text-pointer"
+                  onClick={() => setModalShow(false)}
+                >
+                  <ImageProfile image={userInfo.image} />
+                </div>
               ) : (
-                <Link to={`/profile-people/${user.id}`}>
-                  <NoImageProfile className="text-pointer" />
-                </Link>
+                <div
+                  className="text-pointer"
+                  onClick={() => setModalShow(false)}
+                >
+                  <NoImageProfile />
+                </div>
               )}
               <p>{detailStatus.caption}</p>
             </div>
@@ -83,17 +95,20 @@ export default function ModalExplore({
                 <div key={comment.id} className="modal-card-people">
                   <div className="modal-card-img">
                     {comment.user.image ? (
-                      userToken.id === comment.user.id ? (
-                        <Link to={`/feed`}>
+                      userInfo.id === comment.user.id ? (
+                        <div
+                          className="text-pointer"
+                          onClick={() => setModalShow(false)}
+                        >
                           <ImageProfile image={comment.user.image} />
-                        </Link>
+                        </div>
                       ) : (
-                        <Link to={`/profile-people/${comment.user.id}`}>
+                        <Link to={`/feed`}>
                           <ImageProfile image={comment.user.image} />
                         </Link>
                       )
                     ) : (
-                      <NoImageProfile />
+                      <NoImageProfile className="text-pointer" />
                     )}
                   </div>
                   <div className="modal-info-people">
@@ -119,12 +134,27 @@ export default function ModalExplore({
                 <div className="statusRell-nav-btnModal">
                   <div className="statusRell-nav-body">
                     <div className="statusRell-nav-btn">
-                      <img
-                        key={detailStatus.id}
-                        onClick={() => handleLike(detailStatus.id)}
-                        src="../assets/icons/love.svg"
-                        alt=""
-                      />
+                      {likeShow ? (
+                        <img
+                          key={detailStatus.id}
+                          onClick={() => {
+                            handleLike(detailStatus.id);
+                            setModalShow(false);
+                          }}
+                          src={`../assets/icons/loveColor.svg`}
+                          alt=""
+                        />
+                      ) : (
+                        <img
+                          key={detailStatus.id}
+                          onClick={() => {
+                            handleLike(detailStatus.id);
+                            setModalShow(false);
+                          }}
+                          src="../assets/icons/love.svg"
+                          alt=""
+                        />
+                      )}
                       <img src="../assets/icons/comment.svg" alt="" />
                       <img src="../assets/icons/share.svg" alt="" />
                     </div>

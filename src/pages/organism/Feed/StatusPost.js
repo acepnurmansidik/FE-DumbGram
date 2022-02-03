@@ -9,7 +9,7 @@ import { Card } from "react-bootstrap";
 import { getComments, getPosts } from "../../../services/user";
 import { setLikeFeed, getLikeFeed } from "../../../services/feed";
 import { getTokenId } from "../../atom/notif";
-import ModalDetailStatus from "../../molecules/ModalDetailStatus/ModalDetailStatus";
+import ModalFeed from "./ModalFeed";
 
 export default function StatusPost({ dataStatus }) {
   const [modalShow, setModalShow] = React.useState(false);
@@ -18,13 +18,14 @@ export default function StatusPost({ dataStatus }) {
   const [countLike, setCountLike] = useState([]);
   const [detailStatus, setDetailStatus] = useState({});
   const [userInfo, setUserInfo] = useState({});
+  const [user, setUser] = useState({});
 
   // GET Post
   useEffect(async () => {
     const response = await getPosts(getTokenId());
     setDataList(response.data.feed);
   }, [setDataList]);
-  console.log(dataList);
+
   // GET Like feed
   const handleGetLike = async (id) => {
     const response = await getLikeFeed(id);
@@ -72,11 +73,12 @@ export default function StatusPost({ dataStatus }) {
                   handleGetComments(item.id);
                   handleGetLike(item.id);
                   setDetailStatus(item);
+                  setUser(item.user);
                 }}
                 variant="top"
                 src={`${item.filename}`}
               />
-              <ModalDetailStatus
+              <ModalFeed
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 detailStatus={detailStatus}
@@ -85,6 +87,7 @@ export default function StatusPost({ dataStatus }) {
                 handleLike={handleLike}
                 setModalShow={setModalShow}
                 userInfo={userInfo}
+                user={user}
               />
               <Card.Body>
                 <div className="statusRell-nav">

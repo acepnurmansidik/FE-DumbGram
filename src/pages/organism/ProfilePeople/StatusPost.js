@@ -6,7 +6,7 @@ import { Card } from "react-bootstrap";
 import { getComments, getPosts, getUserAPI } from "../../../services/user";
 import { setLikeFeed, getLikeFeed } from "../../../services/feed";
 import { getTokenId } from "../../atom/notif";
-import ModalDetailStatus from "../../molecules/ModalDetailStatus/ModalDetailStatus";
+import ModalProfilePeople from "./ModalProfilePeople";
 import ImageProfile from "../../atom/ImageProfile/ImageProfile";
 import NoImageProfile from "../../atom/NoImageProfile/NoImageProfile";
 
@@ -85,7 +85,7 @@ export default function StatusPost({ paramID }) {
                 variant="top"
                 src={`${item.filename}`}
               />
-              <ModalDetailStatus
+              <ModalProfilePeople
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 detailStatus={detailStatus}
@@ -102,9 +102,12 @@ export default function StatusPost({ paramID }) {
                       <div className="statusRell-user-profile">
                         <Link to="/feed">
                           {item.user.image ? (
-                            <ImageProfile image={item.user.image} />
+                            <ImageProfile
+                              className="text-pointer"
+                              image={item.user.image}
+                            />
                           ) : (
-                            <NoImageProfile />
+                            <NoImageProfile className="text-pointer" />
                           )}
                         </Link>
                       </div>
