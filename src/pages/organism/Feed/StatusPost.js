@@ -132,10 +132,7 @@ export default function StatusPost({ dataStatus }) {
 
               <div className="statusRell-footer">
                 {countLike.map((like) => {
-                  if (
-                    like.user.id === userInfo.id &&
-                    like.feed.id === item.id
-                  ) {
+                  if (like.feed.id === item.id) {
                     return <p key={like.id}>{countLike.length} Like</p>;
                   } else {
                     return <p key={like.id}>0 Like</p>;

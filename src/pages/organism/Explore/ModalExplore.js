@@ -75,7 +75,10 @@ export default function ModalExplore({
                   <NoImageProfile className="text-pointer" />
                 </Link>
               )}
-              <p>{detailStatus.caption}</p>
+              <div>
+                <h6>{user.fullname}</h6>
+                <p>{detailStatus.caption}</p>
+              </div>
             </div>
             <hr />
             <div className="modal-comments-response">
