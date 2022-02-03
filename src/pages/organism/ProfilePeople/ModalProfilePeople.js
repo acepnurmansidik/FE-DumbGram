@@ -1,7 +1,5 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
-import Cookies from "js-cookie";
-import jwtDecode from "jwt-decode";
 import React, { useEffect, useState } from "react";
 import { Card, Form, Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
@@ -19,17 +17,10 @@ export default function ProfilePeople({
   ...props
 }) {
   const router = useNavigate();
-  const [user, setUser] = useState({});
   const [likeShow, setLikeShow] = useState();
   const [form, setForm] = useState({
     comment: "",
   });
-
-  // GET User from token
-  useEffect(() => {
-    let userTokenCookies = jwtDecode(atob(Cookies.get("token")));
-    setUser(userTokenCookies);
-  }, []);
 
   // compare
   useEffect(() => {

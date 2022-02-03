@@ -2,6 +2,8 @@ import { requestAPI } from "./config/index";
 
 const ROOT_API = `http://localhost:5000/api/v1`;
 
+// USER =====================================================
+// GET user
 export const getUserAPI = async (id) => {
   const url = `${ROOT_API}/user/${id}`;
   let headers = {};
@@ -16,8 +18,9 @@ export const getUserAPI = async (id) => {
   return response;
 };
 
-export const getFollowers = async (id) => {
-  const url = `${ROOT_API}/followers/${id}`;
+// GET message user
+export const getChatList = async () => {
+  const url = `${ROOT_API}/message-user`;
   let headers = {};
 
   return requestAPI({
@@ -28,57 +31,7 @@ export const getFollowers = async (id) => {
   });
 };
 
-export const getFollowings = async (id) => {
-  const url = `${ROOT_API}/following/${id}`;
-  let headers = {};
-
-  return requestAPI({
-    url,
-    method: "GET",
-    headers,
-    token: true,
-  });
-};
-
-export const getPosts = async (id) => {
-  const url = `${ROOT_API}/feed/${id}`;
-  let headers = {};
-
-  return requestAPI({
-    url,
-    method: "GET",
-    headers,
-    token: true,
-  });
-};
-
-export const getComments = async (id) => {
-  const url = `${ROOT_API}/comments/${id}`;
-  let headers = {};
-
-  return requestAPI({
-    url,
-    method: "GET",
-    headers,
-    token: true,
-  });
-};
-
-export const createPost = async (data) => {
-  const url = `${ROOT_API}/feed`;
-  let headers = {
-    "Content-type": "multipart/form-data",
-  };
-
-  return requestAPI({
-    url,
-    method: "POST",
-    data,
-    headers,
-    token: true,
-  });
-};
-
+// UPDATE user
 export const setUpdateProfile = async (data, id) => {
   const url = `${ROOT_API}/user/${id}`;
   let headers = {
@@ -94,8 +47,10 @@ export const setUpdateProfile = async (data, id) => {
   });
 };
 
-export const getChatList = async () => {
-  const url = `${ROOT_API}/message-user`;
+// COMMENTS =================================================
+// GET comments
+export const getComments = async (id) => {
+  const url = `${ROOT_API}/comments/${id}`;
   let headers = {};
 
   return requestAPI({
@@ -106,6 +61,7 @@ export const getChatList = async () => {
   });
 };
 
+// POST create comment
 export const setPostComment = async (data) => {
   const url = `${ROOT_API}/comment`;
   let headers = {};
@@ -119,8 +75,26 @@ export const setPostComment = async (data) => {
   });
 };
 
-export const getStatusFollow = async (id) => {
-  const url = `${ROOT_API}/follower/${id}`;
+// FEED/POST ================================================
+// POST create feed
+export const createPost = async (data) => {
+  const url = `${ROOT_API}/feed`;
+  let headers = {
+    "Content-type": "multipart/form-data",
+  };
+
+  return requestAPI({
+    url,
+    method: "POST",
+    data,
+    headers,
+    token: true,
+  });
+};
+
+// GET post/feed
+export const getPosts = async (id) => {
+  const url = `${ROOT_API}/feed/${id}`;
   let headers = {};
 
   return requestAPI({
@@ -131,25 +105,54 @@ export const getStatusFollow = async (id) => {
   });
 };
 
-export const actionFollow = async (id) => {
-  const url = `${ROOT_API}/following/${id}?status=follow`;
+// FOLLOW ====================================================
+// GET followers
+export const getFollowers = async (id) => {
+  const url = `${ROOT_API}/followers/${id}`;
   let headers = {};
 
   return requestAPI({
     url,
-    method: "POST",
+    method: "GET",
     headers,
     token: true,
   });
 };
 
-export const actionUnFollow = async (id) => {
-  const url = `${ROOT_API}/following/${id}?status=unfollow`;
+// GET following
+export const getFollowings = async (id) => {
+  const url = `${ROOT_API}/following/${id}`;
   let headers = {};
 
   return requestAPI({
     url,
-    method: "DELETE",
+    method: "GET",
+    headers,
+    token: true,
+  });
+};
+
+// GET status follower
+export const getStatusFollow = async (id) => {
+  const url = `${ROOT_API}/following-detail/${id}`;
+  let headers = {};
+
+  return requestAPI({
+    url,
+    method: "GET",
+    headers,
+    token: true,
+  });
+};
+
+// POST & DELETE follow
+export const actionBtnToggleFollow = async (id) => {
+  const url = `${ROOT_API}/following/${id}`;
+  let headers = {};
+
+  return requestAPI({
+    url,
+    method: "POST",
     headers,
     token: true,
   });

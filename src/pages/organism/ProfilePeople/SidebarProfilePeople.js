@@ -9,8 +9,7 @@ import {
   getFollowers,
   getPosts,
   getStatusFollow,
-  actionFollow,
-  actionUnFollow,
+  actionBtnToggleFollow,
 } from "../../../services/user";
 import ImageProfile from "../../atom/ImageProfile/ImageProfile";
 import NoImageProfile from "../../atom/NoImageProfile/NoImageProfile";
@@ -51,21 +50,13 @@ export default function SidebarProfilePeople(props) {
   // GET status follow
   useState(async () => {
     const response = await getStatusFollow(paramID);
-    setStatusFollow(response.data.follower);
+    setStatusFollow(response.data.following);
   }, []);
 
-  // handle button=====================
-
-  // handle unfollow
-  const handleBtnUnfollow = async () => {
-    await actionUnFollow(paramID);
-    window.location.reload();
-  };
-
-  // handle follow
-  const handleBtnFollow = async () => {
-    await actionFollow(paramID);
-    window.location.reload();
+  // handle button=========================================
+  // handle toggle follow
+  const handleToggleFollow = async () => {
+    await actionBtnToggleFollow(paramID);
   };
 
   const handleLogOut = () => {
@@ -119,9 +110,12 @@ export default function SidebarProfilePeople(props) {
                     </Col>
 
                     <Col>
-                      {statusFollow ? (
+                      {statusFollow.length ? (
                         <Button
-                          onClick={handleBtnUnfollow}
+                          onClick={() => {
+                            handleToggleFollow();
+                            window.location.reload();
+                          }}
                           className="unfollow-btn"
                         >
                           Unfollow
@@ -129,7 +123,10 @@ export default function SidebarProfilePeople(props) {
                       ) : (
                         <Form>
                           <Button
-                            onClick={handleBtnFollow}
+                            onClick={() => {
+                              handleToggleFollow();
+                              window.location.reload();
+                            }}
                             className="unfollow-btn"
                           >
                             Follow
