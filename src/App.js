@@ -8,6 +8,7 @@ import EditProfile from "./pages/organism/EditProfile/EditProfile";
 import Explore from "./pages/organism/Explore/Explore";
 import ProfilePeople from "./pages/organism/ProfilePeople/ProfilePeople";
 import Message from "./pages/organism/Message/Message";
+import SendMessage from "./pages/organism/SendMessage/SendMessage";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -23,6 +24,7 @@ export default function App() {
           <Route exact path="/explore" element={<Explore />} />
           <Route exact path="/profile-people/:id" element={<ProfilePeople />} />
           <Route exact path="/message" element={<Message />} />
+          <Route exact path="/message/:id" element={<SendMessage />} />
         </Routes>
       </Router>
       <ToastContainer />

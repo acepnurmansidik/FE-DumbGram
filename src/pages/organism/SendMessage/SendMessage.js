@@ -2,18 +2,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Navigation from "../../molecules/Navigation/Navigation";
-import CardMessagePeoples from "./CardMessagePeoples";
-import Chat from "./Chat";
 import {
   getChatListSender,
   getChatListReceiver,
+  getMessageUserDetail,
 } from "../../../services/message";
+import CardMessagePeoples from "../Message/CardMessagePeoples";
+import Chat from "./Chat";
 
-export default function Message() {
+export default function SendMessage() {
+  const { id } = useParams();
   const [chatList, setChatList] = useState(null);
   const [chats, setChats] = useState([]);
+  const [targetChat, setTargetChat] = useState("");
+
+  useEffect(async () => {
+    const response = await getMessageUserDetail(id);
+    setChatList(response.data.Message);
+  }, []);
 
   useEffect(async () => {
     let data = [];
@@ -73,6 +81,7 @@ export default function Message() {
                     chats={chats}
                     setChatList={setChatList}
                     chatList={chatList}
+                    setTargetChat={setTargetChat}
                   />
                 </div>
               </div>
@@ -85,7 +94,7 @@ export default function Message() {
                 <h1>Message</h1>
               </Row>
               <Row>
-                <Chat chatList={chatList} />
+                <Chat chatList={chatList} targetChat={targetChat} />
               </Row>
             </Col>
           </Row>

@@ -105,7 +105,12 @@ export default function SidebarProfilePeople(props) {
                   <Row>
                     <Col>
                       <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Button className="btn gradient-btn">Message</Button>
+                        <Button
+                          onClick={() => router(`/message/${userInfo.id}`)}
+                          className="btn gradient-btn"
+                        >
+                          Message
+                        </Button>
                       </Form.Group>
                     </Col>
 

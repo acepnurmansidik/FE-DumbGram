@@ -1,20 +1,17 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { getMessageUserDetail } from "../../../services/message";
 import ImageProfile from "../../atom/ImageProfile/ImageProfile";
 import NoImageProfile from "../../atom/NoImageProfile/NoImageProfile";
 
-export default function CardMessagePeoples({
-  chats,
-  setChatList,
-  chatList,
-  setTargetChat,
-}) {
+export default function CardMessagePeoples({ chats, setChatList, chatList }) {
+  const router = useNavigate();
   const clickContact = async (id) => {
     const response = await getMessageUserDetail(id);
     setChatList(response.data.Message);
-    setTargetChat(id);
+    router(`/message/${id}`);
   };
 
   return (
