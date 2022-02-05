@@ -45,8 +45,8 @@
 
 /* time */
 .card-me .time-message-rell,
-.card-other .time-message-rell{
-  width: 3vw;
+.card-other .time-message-rell {
+  width: 4.1vw;
   text-align: center;
   background-color: #0b0b0b;
 }
@@ -55,8 +55,8 @@
   order: 1;
 }
 
-.history-message-rell p{
-  background-color: rgba(87, 87, 87, .3);
+.history-message-rell p {
+  background-color: rgba(87, 87, 87, 0.3);
   color: #fff;
   border-radius: 5px;
   padding: 5px;
@@ -101,7 +101,7 @@
 }
 
 /* No Message */
-.no-message-status{
+.no-message-status {
   display: flex;
   justify-content: center;
   align-items: center;

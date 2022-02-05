@@ -1,31 +1,36 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getMessageUserDetail } from "../../../services/message";
+import ImageProfile from "../../atom/ImageProfile/ImageProfile";
+import NoImageProfile from "../../atom/NoImageProfile/NoImageProfile";
 
-export default function CardMessagePeoples({
-  dataContact,
-  setChatList,
-  chatList,
-}) {
-  const clickContact = (id) => {
-    const data = dataContact.find((dateItem) => dateItem.idReceiver === id);
-    setChatList(data);
+export default function CardMessagePeoples({ chats, setChatList, chatList }) {
+  const clickContact = async (id) => {
+    const response = await getMessageUserDetail(id);
+    setChatList(response.data.Message);
   };
+
   return (
     <>
-      {dataContact.map((dateItem) => (
+      {chats.map((chat) => (
         <div
-          key={dateItem.idReceiver}
-          onClick={() => clickContact(dateItem.idReceiver)}
+          key={chat.id}
+          onClick={() => clickContact(chat.receiver.id)}
           className={`card-message-peoples ${
-            chatList?.idReceiver === dateItem?.idReceiver && "contact-active"
+            chatList?.idReceiver === chat?.idReceiver && "contact-active"
           }`}
         >
           <div className="dd-card-img">
-            <img src={`/assets/img/${dateItem.user.image}`} alt="" />
+            {chat.receiver.image ? (
+              <ImageProfile image={chat.receiver.image} />
+            ) : (
+              <NoImageProfile className="text-pointer" />
+            )}
           </div>
           <div className="card-info-people">
-            <div className="mt-3">{dateItem.user.fullname}</div>
-            <p>{dateItem.message}</p>
+            <div className="mt-3">{chat.receiver.fullname}</div>
+            <p>{chat.message}</p>
           </div>
         </div>
       ))}

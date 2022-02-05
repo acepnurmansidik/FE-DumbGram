@@ -1,93 +1,52 @@
-import React, { useState } from "react";
+/* eslint-disable array-callback-return */
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Navigation from "../../molecules/Navigation/Navigation";
 import CardMessagePeoples from "./CardMessagePeoples";
 import Chat from "./Chat";
+import {
+  getChatListSender,
+  getChatListReceiver,
+} from "../../../services/message";
 
 export default function Message() {
   const [chatList, setChatList] = useState(null);
+  const [chats, setChats] = useState([]);
 
-  const dataContact = [
-    {
-      id: 8,
-      message: "hai lisa",
-      idSender: 2,
-      idReceiver: 4,
-      createdAt: "2022-01-23T04:55:13.000Z",
-      user: {
-        id: 2,
-        username: "acep",
-        fullname: "acepnurmansidik",
-        image: "Rectangle 10.png",
-      },
-    },
-    {
-      id: 9,
-      message: "hai juga acep",
-      idSender: 4,
-      idReceiver: 2,
-      createdAt: "2022-01-23T04:57:31.000Z",
-      user: {
-        id: 4,
-        username: "lisa",
-        fullname: "lisa",
-        image: "Rectangle 10.png",
-      },
-    },
-    {
-      id: 10,
-      message: "how are you?",
-      idSender: 4,
-      idReceiver: 2,
-      createdAt: "2022-01-23T05:16:09.000Z",
-      user: {
-        id: 4,
-        username: "lisa",
-        fullname: "lisa",
-        image: "Rectangle 10.png",
-      },
-    },
-    {
-      id: 12,
-      message: "i'am fine lisa, how about you?",
-      idSender: 2,
-      idReceiver: 4,
-      createdAt: "2022-01-26T23:02:58.000Z",
-      user: {
-        id: 2,
-        username: "acep",
-        fullname: "acepnurmansidik",
-        image: "Rectangle 10.png",
-      },
-    },
-    {
-      id: 13,
-      message: "i'am fine acep",
-      idSender: 4,
-      idReceiver: 2,
-      createdAt: "2022-01-23T05:16:09.000Z",
-      user: {
-        id: 4,
-        username: "lisa",
-        fullname: "lisa",
-        image: "Rectangle 10.png",
-      },
-    },
-    {
-      id: 13,
-      message: "i want married with you acep",
-      idSender: 4,
-      idReceiver: 2,
-      createdAt: "2022-01-23T05:16:09.000Z",
-      user: {
-        id: 4,
-        username: "lisa",
-        fullname: "lisa",
-        image: "Rectangle 10.png",
-      },
-    },
-  ];
+  useEffect(async () => {
+    let data = [];
+    const responseSender = await getChatListSender();
+    const dataSend = responseSender.data.chatList;
+    dataSend.map((item) => {
+      data.push(item);
+    });
+
+    const responseReceiver = await getChatListReceiver();
+    responseReceiver.data.chatList.map((item) => {
+      data.push({
+        id: item.id,
+        message: item.message,
+        createdAt: item.createdAt,
+        receiver: item.sender,
+        sender: item.receiver,
+      });
+    });
+
+    const arr = [];
+    // Filter data duplicate/delete data duplicate
+    data.reduce((acc, curr) => {
+      if (acc.indexOf(curr.receiver.id) === -1) {
+        acc.push(curr.receiver.id);
+        arr.push(curr);
+      }
+      return acc;
+    }, []);
+
+    setChats(arr);
+  }, []);
+
   return (
     <>
       <Container fluid>
@@ -111,7 +70,7 @@ export default function Message() {
                 </Link>
                 <div className="sidebar-message-menu">
                   <CardMessagePeoples
-                    dataContact={dataContact}
+                    chats={chats}
                     setChatList={setChatList}
                     chatList={chatList}
                   />
@@ -126,7 +85,7 @@ export default function Message() {
                 <h1>Message</h1>
               </Row>
               <Row>
-                <Chat contact={chatList} dataContact={dataContact} />
+                <Chat chatList={chatList} />
               </Row>
             </Col>
           </Row>

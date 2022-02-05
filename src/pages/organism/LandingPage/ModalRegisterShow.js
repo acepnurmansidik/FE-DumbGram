@@ -54,7 +54,7 @@ export default function ModalRegisterShow({
             Register
           </Modal.Title>
           <Form onSubmit={handleOnSubmit}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3" controlId="formBasicFullname">
               <Form.Control
                 type="text"
                 className="form-control"
@@ -64,7 +64,7 @@ export default function ModalRegisterShow({
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3" controlId="formBasicUsername">
               <Form.Control
                 type="text"
                 className="form-control"

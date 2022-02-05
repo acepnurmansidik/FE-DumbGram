@@ -1,11 +1,22 @@
 /* eslint-disable array-callback-return */
-import React from "react";
+import React, { useEffect, useState } from "react";
+import jwtDecode from "jwt-decode";
+import Cookies from "js-cookie";
+import ImageProfile from "../../atom/ImageProfile/ImageProfile";
+import moment from "moment";
+import { Link } from "react-router-dom";
 
-export default function Chat({ contact, dataContact }) {
+export default function Chat({ chatList }) {
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const result = jwtDecode(atob(Cookies.get("token")));
+    setUser(result);
+  }, []);
   return (
     <>
-      {contact ? (
-        <MessageResponse contact={contact} dataContact={dataContact} />
+      {chatList ? (
+        <MessageResponse chatList={chatList} user={user} />
       ) : (
         <NoMessageResponse />
       )}
@@ -25,24 +36,30 @@ function NoMessageResponse() {
   );
 }
 
-function MessageResponse({ contact, dataContact }) {
+function MessageResponse({ chatList, user }) {
   return (
     <div>
       <div className="history-message-rell">
-        {dataContact.map((msgItem) => {
-          if (msgItem.idSender === 2) {
+        {chatList.map((msgItem) => {
+          if (msgItem.receiver.id !== user.id) {
             return (
-              <div className="card-other">
-                <p className="time-message-rell">23:13</p>
+              <div key={msgItem.id} className="card-other">
+                <p className="time-message-rell">
+                  {moment(`${msgItem.createdAt}`).format("LT")}
+                </p>
                 <p>{msgItem.message}</p>
               </div>
             );
-          } else if (msgItem.idSender === 4) {
+          } else if (msgItem.receiver.id === user.id) {
             return (
-              <div className="card-me">
-                <img src="/assets/img/Rectangle 10.png" alt="" />
+              <div key={msgItem.id} className="card-me">
+                <Link to={`/profile-people/${msgItem.sender.id}`}>
+                  <ImageProfile image={msgItem.sender.image} />
+                </Link>
                 <p>{msgItem.message}</p>
-                <p className="time-message-rell">23:13</p>
+                <p className="time-message-rell">
+                  {moment(`${msgItem.createdAt}`).format("LT")}
+                </p>
               </div>
             );
           }
