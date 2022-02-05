@@ -16,13 +16,14 @@ export default function SendMessage() {
   const { id } = useParams();
   const [chatList, setChatList] = useState(null);
   const [chats, setChats] = useState([]);
-  const [targetChat, setTargetChat] = useState("");
 
+  // GET message chat with params
   useEffect(async () => {
     const response = await getMessageUserDetail(id);
     setChatList(response.data.Message);
   }, []);
 
+  // GET user chat list
   useEffect(async () => {
     let data = [];
     const responseSender = await getChatListSender();
@@ -81,7 +82,6 @@ export default function SendMessage() {
                     chats={chats}
                     setChatList={setChatList}
                     chatList={chatList}
-                    setTargetChat={setTargetChat}
                   />
                 </div>
               </div>
@@ -94,7 +94,7 @@ export default function SendMessage() {
                 <h1>Message</h1>
               </Row>
               <Row>
-                <Chat chatList={chatList} targetChat={targetChat} />
+                <Chat chatList={chatList} />
               </Row>
             </Col>
           </Row>

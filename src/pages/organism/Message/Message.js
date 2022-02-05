@@ -15,6 +15,7 @@ export default function Message() {
   const [chatList, setChatList] = useState(null);
   const [chats, setChats] = useState([]);
 
+  // GET user chat list
   useEffect(async () => {
     let data = [];
     const responseSender = await getChatListSender();
