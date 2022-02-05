@@ -1,14 +1,20 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { getMessageUserDetail } from "../../../services/message";
 import ImageProfile from "../../atom/ImageProfile/ImageProfile";
 import NoImageProfile from "../../atom/NoImageProfile/NoImageProfile";
 
-export default function CardMessagePeoples({ chats, setChatList, chatList }) {
+export default function CardMessagePeoples({
+  chats,
+  setChatList,
+  chatList,
+  setTargetChat,
+}) {
   const clickContact = async (id) => {
     const response = await getMessageUserDetail(id);
     setChatList(response.data.Message);
+    setTargetChat(id);
   };
 
   return (

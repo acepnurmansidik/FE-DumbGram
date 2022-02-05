@@ -79,16 +79,21 @@
   justify-content: flex-start;
   align-items: center;
   box-sizing: border-box;
+  padding: 2px;
 }
 
-.sender-message-input input {
+#input-message {
+  width: 445%;
+}
+
+.sender-message-input .input-field {
   background: rgba(180, 180, 180, 0.2);
   height: 45px;
   border-radius: 5px;
-  width: 99%;
   border: none;
   padding: 0 0.5rem;
   color: #fff;
+  box-sizing: border-box;
 }
 
 .sender-message-input input:focus {

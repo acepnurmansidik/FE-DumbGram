@@ -40,3 +40,17 @@ export const getMessageUserDetail = async (id) => {
     token: true,
   });
 };
+
+// POST send message user
+export const setSendMessage = async (data, id) => {
+  const url = `${ROOT_API}/message/${id}`;
+  let headers = {};
+
+  return requestAPI({
+    url,
+    method: "POST",
+    headers,
+    data,
+    token: true,
+  });
+};

@@ -14,6 +14,7 @@ import {
 export default function Message() {
   const [chatList, setChatList] = useState(null);
   const [chats, setChats] = useState([]);
+  const [targetChat, setTargetChat] = useState("");
 
   useEffect(async () => {
     let data = [];
@@ -73,6 +74,7 @@ export default function Message() {
                     chats={chats}
                     setChatList={setChatList}
                     chatList={chatList}
+                    setTargetChat={setTargetChat}
                   />
                 </div>
               </div>
@@ -85,7 +87,7 @@ export default function Message() {
                 <h1>Message</h1>
               </Row>
               <Row>
-                <Chat chatList={chatList} />
+                <Chat chatList={chatList} targetChat={targetChat} />
               </Row>
             </Col>
           </Row>

@@ -1,22 +1,29 @@
 /* eslint-disable array-callback-return */
 import React, { useEffect, useState } from "react";
+import { Form } from "react-bootstrap";
 import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
 import ImageProfile from "../../atom/ImageProfile/ImageProfile";
 import moment from "moment";
+import { setSendMessage } from "../../../services/message";
 import { Link } from "react-router-dom";
 
-export default function Chat({ chatList }) {
+export default function Chat({ chatList, targetChat }) {
   const [user, setUser] = useState({});
 
   useEffect(() => {
     const result = jwtDecode(atob(Cookies.get("token")));
     setUser(result);
   }, []);
+
   return (
     <>
       {chatList ? (
-        <MessageResponse chatList={chatList} user={user} />
+        <MessageResponse
+          chatList={chatList}
+          user={user}
+          targetChat={targetChat}
+        />
       ) : (
         <NoMessageResponse />
       )}
@@ -36,7 +43,22 @@ function NoMessageResponse() {
   );
 }
 
-function MessageResponse({ chatList, user }) {
+function MessageResponse({ chatList, user, targetChat }) {
+  const [form, setForm] = useState({
+    message: "",
+  });
+  // Handle================================
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    const response = await setSendMessage(form, targetChat);
+    console.log(response.data.Message);
+  };
+  const handleOnChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
   return (
     <div>
       <div className="history-message-rell">
@@ -66,7 +88,17 @@ function MessageResponse({ chatList, user }) {
         })}
       </div>
       <div className="sender-message-input">
-        <input type="text" placeholder="Send Message" />
+        <Form onSubmit={handleOnSubmit}>
+          <Form.Group>
+            <Form.Control
+              type="text"
+              id="input-message"
+              placeholder="Send message..."
+              name="message"
+              onChange={handleOnChange}
+            />
+          </Form.Group>
+        </Form>
       </div>
     </div>
   );
