@@ -60,19 +60,13 @@ export default function ModalExplore({
           </div>
           <div className="status-modalinfo">
             <div className="owner-status-modal">
-              {user.image ? (
-                userToken.id === user.id ? (
-                  <Link to={`/feed`}>
-                    <ImageProfile className="text-pointer" image={user.image} />
-                  </Link>
-                ) : (
-                  <Link to={`/profile-people/${user.id}`}>
-                    <ImageProfile className="text-pointer" image={user.image} />
-                  </Link>
-                )
+              {userToken.id === user.id ? (
+                <Link to={`/feed`}>
+                  <ImageProfile className="text-pointer" image={user.image} />
+                </Link>
               ) : (
                 <Link to={`/profile-people/${user.id}`}>
-                  <NoImageProfile className="text-pointer" />
+                  <ImageProfile className="text-pointer" image={user.image} />
                 </Link>
               )}
               <div>
@@ -85,18 +79,14 @@ export default function ModalExplore({
               {commentList.map((comment) => (
                 <div key={comment.id} className="modal-card-people">
                   <div className="modal-card-img">
-                    {comment.user.image ? (
-                      userToken.id === comment.user.id ? (
-                        <Link to={`/feed`}>
-                          <ImageProfile image={comment.user.image} />
-                        </Link>
-                      ) : (
-                        <Link to={`/profile-people/${comment.user.id}`}>
-                          <ImageProfile image={comment.user.image} />
-                        </Link>
-                      )
+                    {userToken.id === comment.user.id ? (
+                      <Link to={`/feed`}>
+                        <ImageProfile image={comment.user.image} />
+                      </Link>
                     ) : (
-                      <NoImageProfile />
+                      <Link to={`/profile-people/${comment.user.id}`}>
+                        <ImageProfile image={comment.user.image} />
+                      </Link>
                     )}
                   </div>
                   <div className="modal-info-people">

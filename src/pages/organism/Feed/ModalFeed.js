@@ -107,21 +107,22 @@ export default function ModalFeed({
               {commentList.map((comment) => (
                 <div key={comment.id} className="modal-card-people">
                   <div className="modal-card-img">
-                    {comment.user.image ? (
-                      userToken.id === comment.user.id ? (
-                        <div
-                          className="text-pointer"
-                          onClick={() => setModalShow(false)}
-                        >
-                          <ImageProfile image={comment.user.image} />
-                        </div>
-                      ) : (
-                        <Link to={`/profile-people/${comment.user.id}`}>
-                          <ImageProfile image={comment.user.image} />
-                        </Link>
-                      )
+                    {userToken.id === comment.user.id ? (
+                      <div
+                        className="text-pointer"
+                        onClick={() => setModalShow(false)}
+                      >
+                        <ImageProfile image={comment.user.image} />
+                      </div>
                     ) : (
-                      <NoImageProfile className="text-pointer" />
+                      <div
+                        className="text-pointer"
+                        onClick={() =>
+                          router(`/profile-people/${comment.user.id}`)
+                        }
+                      >
+                        <ImageProfile image={comment.user.image} />
+                      </div>
                     )}
                   </div>
                   <div className="modal-info-people">

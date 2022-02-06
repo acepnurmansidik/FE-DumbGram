@@ -15,6 +15,7 @@ export const getNotifMessage = async () => {
   });
 };
 
+// DELETE notif message
 export const updateNotifMessage = async (id) => {
   const url = `${ROOT_API}/notif-message/${id}`;
   let headers = {};
