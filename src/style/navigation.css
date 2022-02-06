@@ -74,14 +74,20 @@
   gap: 7px;
 }
 
-.dd-card-img {
+.dd-card-img,
+.dd-card-404 {
   margin-left: 12px;
   padding: 0.1rem;
   background: linear-gradient(to right, #4dd4f7, #9090fb, #ff6b81, #fbdf63);
   border-radius: 50%;
 }
 
-.dd-card-img img {
+.dd-card-404 {
+  background: none;
+}
+
+.dd-card-img img,
+.dd-card-404 img {
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
