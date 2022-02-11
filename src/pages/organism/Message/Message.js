@@ -6,47 +6,66 @@ import { Link } from "react-router-dom";
 import Navigation from "../../molecules/Navigation/Navigation";
 import CardMessagePeoples from "./CardMessagePeoples";
 import Chat from "./Chat";
-import {
-  getChatListSender,
-  getChatListReceiver,
-} from "../../../services/message";
+import { io } from "socket.io-client";
+import Cookies from "js-cookie";
 
+let socket;
 export default function Message() {
   const [chatList, setChatList] = useState(null);
   const [chats, setChats] = useState([]);
 
   // GET user chat list
-  useEffect(async () => {
-    let data = [];
-    const responseSender = await getChatListSender();
-    const dataSend = responseSender.data.chatList;
-    dataSend.map((item) => {
-      data.push(item);
+  useEffect(() => {
+    socket = io("http://localhost:5000", {
+      auth: {
+        token: atob(Cookies.get("token")),
+      },
     });
 
-    const responseReceiver = await getChatListReceiver();
-    responseReceiver.data.chatList.map((item) => {
-      data.push({
-        id: item.id,
-        message: item.message,
-        createdAt: item.createdAt,
-        receiver: item.sender,
-        sender: item.receiver,
-      });
+    // listen error sent from server
+    socket.on("connect_error", (err) => {
+      console.error(err.message); // not authorized
     });
 
-    const arr = [];
-    // Filter data duplicate/delete data duplicate
-    data.reduce((acc, curr) => {
-      if (acc.indexOf(curr.receiver.id) === -1) {
-        acc.push(curr.receiver.id);
-        arr.push(curr);
-      }
-      return acc;
-    }, []);
-
-    setChats(arr);
+    // GET user chat list
+    loadUserChats();
+    return () => {
+      socket.disconnect();
+    };
   }, []);
+
+  // Handle ===================================
+  const loadUserChats = () => {
+    socket.emit("load user sender");
+    socket.on("user sender", (dataItem) => {
+      let data = [];
+      dataItem[0].dataSender.map((item) => {
+        data.push(item);
+      });
+
+      dataItem[0].dataReceiver.map((item) => {
+        data.push({
+          id: item.id,
+          message: item.message,
+          createdAt: item.createdAt,
+          receiver: item.sender,
+          sender: item.receiver,
+        });
+      });
+
+      const arr = [];
+      // Filter data duplicate/delete data duplicate
+      data.reduce((acc, curr) => {
+        if (acc.indexOf(curr.receiver.id) === -1) {
+          acc.push(curr.receiver.id);
+          arr.push(curr);
+        }
+        return acc;
+      }, []);
+
+      setChats(arr);
+    });
+  };
 
   return (
     <>

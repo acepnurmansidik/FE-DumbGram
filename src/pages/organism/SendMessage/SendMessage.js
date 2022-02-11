@@ -4,57 +4,99 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import Navigation from "../../molecules/Navigation/Navigation";
-import {
-  getChatListSender,
-  getChatListReceiver,
-  getMessageUserDetail,
-} from "../../../services/message";
-import CardMessagePeoples from "../Message/CardMessagePeoples";
+import ChatListUser from "./ChatListUser";
 import Chat from "./Chat";
+import { io } from "socket.io-client";
+import Cookies from "js-cookie";
 
+// initial variable outside socket
+// eslint-disable-next-line no-unused-vars
+let socket;
 export default function SendMessage() {
   const { id } = useParams();
   const [chatList, setChatList] = useState(null);
   const [chats, setChats] = useState([]);
 
-  // GET message chat with params
-  useEffect(async () => {
-    const response = await getMessageUserDetail(id);
-    setChatList(response.data.Message);
-  }, []);
-
-  // GET user chat list
-  useEffect(async () => {
-    let data = [];
-    const responseSender = await getChatListSender();
-    const dataSend = responseSender.data.chatList;
-    dataSend.map((item) => {
-      data.push(item);
+  useEffect(() => {
+    socket = io("http://localhost:5000", {
+      auth: {
+        token: atob(Cookies.get("token")),
+      },
+      query: {
+        params: id,
+      },
     });
 
-    const responseReceiver = await getChatListReceiver();
-    responseReceiver.data.chatList.map((item) => {
-      data.push({
-        id: item.id,
-        message: item.message,
-        createdAt: item.createdAt,
-        receiver: item.sender,
-        sender: item.receiver,
+    socket.on("new message", () => {
+      socket.emit("load messages", id);
+    });
+
+    // listen error sent from server
+    socket.on("connect_error", (err) => {
+      console.error(err.message); // not authorized
+    });
+
+    // GET user chat list
+    loadUserChats();
+    // GET personal chat user
+    loadMessage();
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  // Handle ===================================
+  const loadUserChats = () => {
+    socket.emit("load user sender");
+    socket.on("user sender", (dataItem) => {
+      let data = [];
+      dataItem[0].dataSender.map((item) => {
+        data.push(item);
       });
+
+      dataItem[0].dataReceiver.map((item) => {
+        data.push({
+          id: item.id,
+          message: item.message,
+          createdAt: item.createdAt,
+          receiver: item.sender,
+          sender: item.receiver,
+        });
+      });
+
+      const arr = [];
+      // Filter data duplicate/delete data duplicate
+      data.reduce((acc, curr) => {
+        if (acc.indexOf(curr.receiver.id) === -1) {
+          acc.push(curr.receiver.id);
+          arr.push(curr);
+        }
+        return acc;
+      }, []);
+
+      setChats(arr);
     });
+  };
 
-    const arr = [];
-    // Filter data duplicate/delete data duplicate
-    data.reduce((acc, curr) => {
-      if (acc.indexOf(curr.receiver.id) === -1) {
-        acc.push(curr.receiver.id);
-        arr.push(curr);
-      }
-      return acc;
-    }, []);
+  const loadMessage = () => {
+    socket.emit("load messages", id);
+    socket.on("messages", async (data) => {
+      setChatList(data);
+    });
+  };
 
-    setChats(arr);
-  }, []);
+  // POST send message
+  const onSendMessage = (e) => {
+    if (e.key === "Enter") {
+      const data = {
+        idReceiver: id,
+        message: e.target.value,
+      };
+      socket.emit("send message", data);
+      e.target.value = "";
+    }
+  };
 
   return (
     <>
@@ -78,7 +120,7 @@ export default function SendMessage() {
                   </div>
                 </Link>
                 <div className="sidebar-message-menu">
-                  <CardMessagePeoples
+                  <ChatListUser
                     chats={chats}
                     setChatList={setChatList}
                     chatList={chatList}
@@ -94,7 +136,7 @@ export default function SendMessage() {
                 <h1>Message</h1>
               </Row>
               <Row>
-                <Chat chatList={chatList} />
+                <Chat chatList={chatList} sendMessage={onSendMessage} />
               </Row>
             </Col>
           </Row>
