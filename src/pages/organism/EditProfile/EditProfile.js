@@ -138,7 +138,7 @@ export default function EditProfile() {
                     <img src={imagePreview} alt="" height={150} width={150} />
                   ) : (
                     <img
-                      src={`http://localhost:5000/uploads/${userInfo.image}`}
+                      src={`https://dumbgram-app.herokuapp.com/uploads/${userInfo.image}`}
                       alt=""
                       height={150}
                       width={150}

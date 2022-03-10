@@ -6,7 +6,7 @@ export default function ImageProfile({ image }) {
     <>
       {image !== null ? (
         <img
-          src={`http://localhost:5000/uploads/${image}`}
+          src={`https://dumbgram-app.herokuapp.com/uploads/${image}`}
           alt=""
           width={180}
           height={180}

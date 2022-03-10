@@ -97,7 +97,7 @@ export default function StatusPost({ dataStatus }) {
                         <Link to="/feed">
                           {item.user.image ? (
                             <img
-                              src={`http://localhost:5000/uploads/${item.user.image}`}
+                              src={`https://dumbgram-app.herokuapp.com/uploads/${item.user.image}`}
                               alt=""
                             />
                           ) : (

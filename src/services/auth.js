@@ -1,6 +1,6 @@
 import { requestAPI } from "./config";
 
-const ROOT_API = `http://localhost:5000/api/v1`;
+const ROOT_API = `https://dumbgram-app.herokuapp.com/api/v1`;
 
 export const setRegister = (data) => {
   const url = `${ROOT_API}/register`;
